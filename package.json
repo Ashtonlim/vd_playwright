@@ -1,0 +1,27 @@
+{
+  "name": "vaultdragone2e",
+  "version": "1.0.0",
+  "description": "end to end testing for vault dragon",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ashtonlim/vd_playwright.git"
+  },
+  "author": "ash",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ashtonlim/vd_playwright/issues"
+  },
+  "homepage": "https://github.com/Ashtonlim/vd_playwright#readme",
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "jest-playwright-preset": "^1.5.2",
+    "playwright": "^1.11.0"
+  }
+}
