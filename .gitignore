@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
-public
+recordings
 .tmp
 .idea
 .log
@@ -8,13 +8,7 @@ dist
 docs
 .env
 npm-debug.log
-.nyc_output
-coverage
-cassettes
-k8s_config/secrets/
 launch.json
 scripts/*/*.json
 uploads/*
-muhammara-error.log
-*.swp
-hn.pdf
+
