@@ -1,15 +1,18 @@
 .DS_Store
-node_modules
-recordings
-screenshots
 .tmp
 .idea
 .log
+.env
+
+node_modules
+recordings
+screenshots
 dist
 docs
-.env
+
+creds.json
 npm-debug.log
-launch.json
+
 scripts/*/*.json
 uploads/*
 

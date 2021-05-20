@@ -22,11 +22,6 @@ describe('reset data', () => {
 
         await Promise.all([x(browser),x(browser),x(browser),x(browser),x(browser),x(browser),x(browser)])
 
-        // for (let i = 0; i < 3; i++) {
-        //     await x(browser, i)
-        //     console.log(i)
-        // }
-
         await browser.close();
 
     })
