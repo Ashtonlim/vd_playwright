@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');
 const { login } = require(process.cwd() + '/steps/login');
-const { URL, headless } = require(process.cwd() + '/g');
+const { URL, headless, viewport } = require(process.cwd() + '/g');
 
 const fs = require('fs');
 let storageState = {};
@@ -10,11 +10,13 @@ let browser;
 let context;
 let page;
 
+let i = 0;
 
 beforeAll(async () => {
   browser = await chromium.launch({
     // channel: 'msedge',
-    headless
+    headless,
+    
   });
 });
 
@@ -50,19 +52,11 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
+  await page.screenshot({ path: `./screenshots/vdTest${i++}.png` });
   await page.close();
 });
 
 describe("init VD", () => {
-  
-  
-  it("Del queue", async () => {
-    await Promise.all([
-      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/),
-      page.click('text=Queue')
-    ]);
-
-  })
 
 
   it("Del", async () => {
@@ -81,6 +75,39 @@ describe("init VD", () => {
     ]);
 
     await page.dblclick('text=Maurice Hamilton');
+
+
+    await page.click('text=Add');
+    await page.click('input[type="number"]');
+    await page.fill('input[type="number"]', '8');
+    await page.press('input[type="number"]', 'Tab');
+    await page.fill('text=Weight kg >> input[type="number"]', '9');
+    await page.press('text=Weight kg >> input[type="number"]', 'Tab');
+    await page.fill('text=LMP date >> input[type="text"]', '2021-05-05');
+    await page.click('text=LMP date >> input[type="text"]');
+    await page.press('text=LMP date >> input[type="text"]', 'Enter');
+    await page.click('text=Waist Circumference inch >> input[type="text"]');
+    await page.fill('text=Waist Circumference inch >> input[type="text"]', '5');
+    await page.press('text=Waist Circumference inch >> input[type="text"]', 'Tab');
+    await page.fill('text=Pulse bpm >> input[type="text"]', '5');
+    await page.press('text=Pulse bpm >> input[type="text"]', 'Tab');
+    await page.fill('text=Systolic mmHg >> input[type="text"]', '5');
+    await page.press('text=Systolic mmHg >> input[type="text"]', 'Tab');
+    await page.fill('text=Diastolic mmHg >> input[type="text"]', '5');
+    await page.press('text=Diastolic mmHg >> input[type="text"]', 'Tab');
+    await page.press('button:has-text("Save")', 'Enter');
+    
+
+  })
+
+    
+  it("Del queue", async () => {
+    await Promise.all([
+      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/),
+      page.click('text=Queue')
+    ]);
+
+
   })
 
 })

@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');
 const { login } = require(process.cwd() + '/steps/login');
-const { URL, headless } = require(process.cwd() + '/g');
+const { URL, headless, viewport } = require(process.cwd() + '/g');
 
 let i = 0
 
@@ -17,7 +17,7 @@ describe('reset data', () => {
     it('clear queue', async () => {
         // jest.setTimeout(30000)
         const browser = await chromium.launch({
-            headless
+            headless,
         });
 
         await Promise.all([x(browser),x(browser),x(browser),x(browser),x(browser),x(browser),x(browser)])
