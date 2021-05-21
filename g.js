@@ -1,9 +1,19 @@
-module.exports.URL = `https://hub-staging.vaultdragon.com`;
+// URLs
+const URL = `https://hub-staging.vaultdragon.com`
+
+module.exports.URL = URL; // will ...url = url cuz issue?
 module.exports.loginURL = `${URL}/login`;
+module.exports.QueuePage = `${URL}/queue/list`;
+// module.exports.QueuePage = `https://hub-staging.vaultdragon.com/queue/list`;
+
+// Settings
 module.exports.headless = false;
 module.exports.sspath = `/screenshots`
 module.exports.viewport = {
     width: 1920,
     height: 1080,
 }
-module.exports.QueuePage = `https://hub-staging.vaultdragon.com/queue/list`;
+module.exports.recordVideo = {
+    dir: "./recordings"
+}
+

@@ -1,2 +1,2 @@
-const secs = 100
+const secs = 20
 jest.setTimeout(secs*1000)

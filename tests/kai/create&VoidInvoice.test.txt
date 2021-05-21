@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');
-const { login, clearQueue } = require(process.cwd() + '/steps/login');
-const { URL, headless, viewport, QueuePage } = require(process.cwd() + '/g');
+const { login } = require(process.cwd() + '/steps/login');
+const { URL, headless } = require(process.cwd() + '/g');
 
 const fs = require('fs');
 let storageState = {};
@@ -46,8 +46,6 @@ beforeEach(async () => {
     fs.writeFileSync('./creds.json', JSON.stringify(await context.storageState()));
     // process.env.STORAGE = JSON.stringify(await context.storageState());
   }
-  
-  
 });
 
 afterEach(async () => {
