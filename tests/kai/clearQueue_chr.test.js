@@ -1,7 +1,6 @@
 const { chromium } = require('playwright');
-const { init, clearQueue } = require(process.cwd() + '/steps');
+const { init, teardown, clearQueue } = require(process.cwd() + '/steps');
 const { headless } = require(process.cwd() + '/g');
-
 
 let browser;
 let context;
@@ -27,8 +26,7 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-  await page.screenshot({ path: `./screenshots/kai${i++}.png` });
-  await page.close();
+  await teardown(page, path=require('path').basename(__filename))
 });
 
 describe("init VD", () => {

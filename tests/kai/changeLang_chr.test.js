@@ -1,5 +1,5 @@
 const { chromium } = require('playwright');
-const { init } = require(process.cwd() + '/steps');
+const { init, teardown } = require(process.cwd() + '/steps');
 const { headless } = require(process.cwd() + '/g');
 
 const fs = require('fs');
@@ -30,8 +30,7 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-  await page.screenshot({ path: `./screenshots/kai${i++}.png` });
-  await page.close();
+  await teardown(page, path=require('path').basename(__filename))
 });
 
 describe("init VD", () => {
