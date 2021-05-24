@@ -29,9 +29,9 @@ afterEach(async () => {
   await teardown(page, path=require('path').basename(__filename))
 });
 
-describe("init VD", () => {
+describe("removes data", () => {
 
-  it('clear queue', async () => {
+  it('clear queue in queue list', async () => {
     await Promise.all([
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/),
       page.click('text=Queue')

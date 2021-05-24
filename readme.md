@@ -8,4 +8,4 @@ jest_html_reporters
 
 ### Settings
 all settings in g.js
-credentials in creds.json
+credentials should be in a file called creds.json, ommited due to sensitive info. Use env vars instead.

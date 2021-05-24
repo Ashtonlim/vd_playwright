@@ -31,9 +31,9 @@ afterEach(async () => {
   await teardown(page, path=require('path').basename(__filename))
 });
 
-describe("init VD", () => {
+describe("user creations", () => {
 
-  it('clear queue', async () => {
+  it('add and delete patient user', async () => {
       // Click text=Queue
       await Promise.all([
         page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/),

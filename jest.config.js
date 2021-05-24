@@ -3,7 +3,12 @@ module.exports = {
     setupFilesAfterEnv: ['./jest.setup.js'],
     "reporters": [
         "default",
-        "jest-html-reporters"
+        ["jest-html-reporters", {
+            "publicPath": "./",
+            "filename": "index.html",
+            "expand": true,
+            "openReport": true
+        }],
     ],
     // reporters: [
     //     "default",
