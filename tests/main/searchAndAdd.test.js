@@ -1,22 +1,11 @@
 const { chromium } = require('playwright');
 const { init, teardown, clearQueue } = require(process.cwd() + '/steps');
-const { headless } = require(process.cwd() + '/g');
+const { browserSettings } = require(process.cwd() + '/g');
 
-
-let browser;
-let context;
-let page;
-
-
-let i = 0;
+let browser, context, page;
 
 beforeAll(async () => {
-  browser = await chromium.launch({
-    // channel: 'msedge',
-    headless,
-    // slowMo: 80,
-    
-  });
+  browser = await chromium.launch(browserSettings);
 });
 
 afterAll(async () => {
@@ -49,7 +38,7 @@ describe("user creations", () => {
       await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'mau');
 
       // Click text=Maurice Hamilton: ETZ8DAZOJV (1) Tel: +6596080926
-      await page.click('text=Maurice Hamilton: ETZ8DAZOJV (1) Tel: +656080926'); // fails here
+      await page.click('text=Maurice Hamilton: ETZ8DAZOJV (1) Tel: +6596080926');
 
       // Click [placeholder="Search by Patient's Name, NRIC, ID, Mobile Number"]
       await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]');

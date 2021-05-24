@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "jest",
-    "rec": "npx playwright codegen --load-storage=creds.json -o ./codeOutput/out.js https://hub-staging.vaultdragon.com"
+    "t": "jest ./tests/doing/template1",
+    "rec": "npx playwright codegen --viewport-size=1920,1080 --load-storage=creds.json -o ./codeOutput/out.js https://hub-staging.vaultdragon.com"
   },
   "repository": {
     "type": "git",

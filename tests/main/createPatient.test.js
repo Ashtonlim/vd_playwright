@@ -1,20 +1,11 @@
 const { chromium } = require('playwright');
 const { init, teardown } = require(process.cwd() + '/steps');
-const { headless } = require(process.cwd() + '/g');
+const { browserSettings } = require(process.cwd() + '/g');
 
-let browser;
-let context;
-let page;
-
-let i = 0;
+let browser, context, page;
 
 beforeAll(async () => {
-  browser = await chromium.launch({
-    // channel: 'msedge',
-    headless,
-    // slowMo: 100,
-    
-  });
+  browser = await chromium.launch(browserSettings);
 });
 
 afterAll(async () => {

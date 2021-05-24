@@ -1,24 +1,11 @@
 const { chromium } = require('playwright');
-const { login } = require(process.cwd() + '/steps/login');
-const { URL, headless } = require(process.cwd() + '/g');
+const { init, teardown } = require(process.cwd() + '/steps');
+const { browserSettings } = require(process.cwd() + '/g');
 
-const fs = require('fs');
-let storageState = {};
-// storageState = require('../creds.json');
-
-let browser;
-let context;
-let page;
-
-let i = 0;
+let browser, context, page;
 
 beforeAll(async () => {
-  browser = await chromium.launch({
-    // channel: 'msedge',
-    headless,
-    // slowMo: 100,
-    
-  });
+  browser = await chromium.launch(browserSettings);
 });
 
 afterAll(async () => {
@@ -26,38 +13,16 @@ afterAll(async () => {
 });
 
 beforeEach(async () => {
-  // Save storage state and store as an env variable
-  if (Object.keys(storageState).length || typeof process.env.storage !== 'undefined') {
-    // Create a new context with the saved storage state
-    // storageState = JSON.parse(process.env.storage);
-
-    context = await browser.newContext({storageState});
-    page = await context.newPage();
-    
-    await page.goto(URL);
-
-  } else {
-    context = await browser.newContext();
-    page = await context.newPage();
-
-    await page.goto(URL);
-    await login(page);
-
-    fs.writeFileSync('./creds.json', JSON.stringify(await context.storageState()));
-    // process.env.STORAGE = JSON.stringify(await context.storageState());
-  }
+  ({context, page} = await init(browser));
 });
 
 afterEach(async () => {
-  await page.screenshot({ path: `./screenshots/kai${i++}.png` });
-  await page.close();
+  await teardown(page, path=require('path').basename(__filename))
 });
 
 describe("patient", () => {
 
   it('create and void an invoice', async () => {
-
-     
     await Promise.all([
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/),
       page.click('text=Patient')

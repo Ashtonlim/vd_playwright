@@ -7,7 +7,7 @@ module.exports = {
             "publicPath": "./",
             "filename": "index.html",
             "expand": true,
-            "openReport": true
+            // "openReport": true
         }],
     ],
     // reporters: [

@@ -8,7 +8,7 @@ let page;
 
 
 
-module.exports.init = async (browser, skipLogin = true, recVid=true, contextObj = {viewport}) => {
+module.exports.init = async (browser, skipLogin = true, recVid=false, contextObj = {viewport}) => {
     if (skipLogin || Object.keys(storageState).length || typeof process.env.storage !== 'undefined') {
         contextObj = {...contextObj, storageState}
     }
@@ -25,6 +25,6 @@ module.exports.init = async (browser, skipLogin = true, recVid=true, contextObj 
 
     return {context, page}
 
-    fs.writeFileSync('./creds.json', JSON.stringify(await context.storageState()));
+    // fs.writeFileSync('./creds.json', JSON.stringify(await context.storageState()));
 
 }
