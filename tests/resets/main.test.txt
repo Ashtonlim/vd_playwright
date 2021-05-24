@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');
-const { login } = require(process.cwd() + '/steps/login');
-const { URL, headless, viewport } = require(process.cwd() + '/g');
+const { login } = require(process.cwd() + '/steps');
+const { URL, headless } = require(process.cwd() + '/g');
 
 let i = 0
 
@@ -20,7 +20,7 @@ describe('reset data', () => {
             headless,
         });
 
-        await Promise.all([x(browser),x(browser),x(browser),x(browser),x(browser),x(browser),x(browser)])
+        await Promise.all([x(browser)])
 
         await browser.close();
 
