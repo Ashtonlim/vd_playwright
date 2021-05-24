@@ -1,10 +1,6 @@
 const { chromium } = require('playwright');
-const { login } = require(process.cwd() + '/steps');
-const { URL, headless, viewport } = require(process.cwd() + '/g');
-
-const fs = require('fs');
-let storageState = {};
-// storageState = require('../creds.json');
+const { init } = require(process.cwd() + '/steps');
+const { headless } = require(process.cwd() + '/g');
 
 let browser;
 let context;
@@ -26,28 +22,7 @@ afterAll(async () => {
 });
 
 beforeEach(async () => {
-  // Save storage state and store as an env variable
-  if (Object.keys(storageState).length || typeof process.env.storage !== 'undefined') {
-    // Create a new context with the saved storage state
-    // storageState = JSON.parse(process.env.storage);
-
-    context = await browser.newContext({storageState});
-    page = await context.newPage();
-    
-    await page.goto(URL);
-
-  } else {
-    context = await browser.newContext({viewport});
-    page = await context.newPage();
-
-    await page.goto(URL);
-    await login(page);
-
-    fs.writeFileSync('./creds.json', JSON.stringify(await context.storageState()));
-    // process.env.STORAGE = JSON.stringify(await context.storageState());
-  }
-  
-  
+  ({context, page} = await init(browser));
 });
 
 afterEach(async () => {
@@ -58,9 +33,6 @@ afterEach(async () => {
 describe("init VD", () => {
 
   it('Create and delete a patient', async () => {
-
-
-
 
      // Click text=Patient
     await Promise.all([

@@ -1,14 +1,12 @@
 const { chromium } = require('playwright');
-const { login, clearQueue } = require(process.cwd() + '/steps');
-const { URL, headless, viewport } = require(process.cwd() + '/g');
+const { init, clearQueue } = require(process.cwd() + '/steps');
+const { headless } = require(process.cwd() + '/g');
 
-const fs = require('fs');
-let storageState = {};
-storageState = require(process.cwd() + '/creds.json');
 
 let browser;
 let context;
 let page;
+
 
 let i = 0;
 
@@ -26,61 +24,15 @@ afterAll(async () => {
 });
 
 beforeEach(async () => {
-  // Save storage state and store as an env variable
-  if (Object.keys(storageState).length || typeof process.env.storage !== 'undefined') {
-    // Create a new context with the saved storage state
-    // storageState = JSON.parse(process.env.storage);
-
-    context = await browser.newContext({viewport, storageState});
-    page = await context.newPage();
-    
-    await page.goto(URL);
-
-  } else {
-    context = await browser.newContext({viewport});
-    page = await context.newPage();
-
-    await page.goto(URL);
-    await login(page);
-
-    fs.writeFileSync('./creds.json', JSON.stringify(await context.storageState()));
-    // process.env.STORAGE = JSON.stringify(await context.storageState());
-  }
-  
-  
+  ({context, page} = await init(browser));  
 });
 
 afterEach(async () => {
-  await page.screenshot({ path: `./screenshots/kai${i++}.png` });
+  await page.screenshot({ path: `./screenshots/` });
   await page.close();
 });
 
 describe("init VD", () => {
-
-  // it('test filter', async () => {
-  //   await Promise.all([
-  //     page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/),
-  //     page.click('text=Queue')
-  //   ]);
-
-  //   // Select 609242ca95e14e0012915202
-  //   // await page.selectOption('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select', '609242ca95e14e0012915202');
-
-  //   // // Select
-  //   // await page.selectOption('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select', '');
-
-  //   // const ddRow = await page.$$('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select')
-  //   // await page.evalute('.input-group.mr-2.children[1].selectedIndex = 1')
-  //   // await page.evalute('.input-group.mr-2.children[1].selectedIndex = 0')
-  //   // const hrefSel = await page.evaluate(() => document.querySelector('.input-group.mr-2').children[1].selectedIndex = 1);
-  //   // const hrefUnSel = await page.evaluate(() => document.querySelector('.input-group.mr-2').children[1].selectedIndex = 0);
-  //   await page.waitForSelector('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select');
-
-  //   await page.$eval('.input-group.mr-2', el => {el.children[1].selectedIndex = 1})
-
-  //   await page.$eval('.input-group.mr-2', el => {el.children[1].selectedIndex = 0})
-    
-  // })
 
   it('clear queue', async () => {
       // Click text=Queue
@@ -227,23 +179,20 @@ describe("init VD", () => {
       await page.click('text=Steve Marsh');
       await page.click('text=Queue');
 
+      await page.waitForSelector('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select');
       await page.$eval('.input-group.mr-2', el => {el.children[1].selectedIndex = 0})
 
 
       await page.waitForSelector('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select');
       await page.$eval('.input-group.mr-2', el => {el.children[2].selectedIndex = 1})
 
-      // Click text=Steve Marsh -
-      await page.click('text=Steve Marsh -');
       // assert.equal(page.url(), 'https://hub-staging.vaultdragon.com/patient/detail/608ee95795e14e00129150d3');
-
-      // Click text=Steve Marsh
+      await page.click('text=Steve Marsh -');
       await page.click('text=Steve Marsh');
-
-      // Click text=Queue
       await page.click('text=Queue');
       // assert.equal(page.url(), 'https://hub-staging.vaultdragon.com/queue/list');
 
+      await page.waitForSelector('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select');
       await page.$eval('.input-group.mr-2', el => {el.children[2].selectedIndex = 0})
 
       await clearQueue(page);
