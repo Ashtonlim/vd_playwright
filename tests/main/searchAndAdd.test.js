@@ -1,6 +1,7 @@
 const { chromium } = require('playwright');
 const { init, teardown, clearQueue } = require(process.cwd() + '/steps');
 const { browserSettings } = require(process.cwd() + '/g');
+const { selDropdownOpt } = require(process.cwd() + '/api');
 
 let browser, context, page;
 
@@ -159,20 +160,16 @@ describe("user creations", () => {
 
       // Select
       await page.selectOption('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select', '');
-      
-      await page.waitForSelector('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select');
-      await page.$eval('.input-group.mr-2', el => {el.children[1].selectedIndex = 1})
+
+      await selDropdownOpt(page, '.input-group.mr-2:nth-child(1) > select:nth-child(2)', "Service 1")
 
       await page.click('text=Steve Marsh -');
       await page.click('text=Steve Marsh');
       await page.click('text=Queue');
 
-      await page.waitForSelector('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select');
-      await page.$eval('.input-group.mr-2', el => {el.children[1].selectedIndex = 0})
+      await selDropdownOpt(page, '.input-group.mr-2:nth-child(1) > select:nth-child(2)', 0)
 
-
-      await page.waitForSelector('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select');
-      await page.$eval('.input-group.mr-2', el => {el.children[2].selectedIndex = 1})
+      await selDropdownOpt(page, '.input-group.mr-2:nth-child(1) > select:nth-child(3)', 1)
 
       // assert.equal(page.url(), 'https://hub-staging.vaultdragon.com/patient/detail/608ee95795e14e00129150d3');
       await page.click('text=Steve Marsh -');
@@ -180,8 +177,7 @@ describe("user creations", () => {
       await page.click('text=Queue');
       // assert.equal(page.url(), 'https://hub-staging.vaultdragon.com/queue/list');
 
-      await page.waitForSelector('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select');
-      await page.$eval('.input-group.mr-2', el => {el.children[2].selectedIndex = 0})
+      await selDropdownOpt(page, '.input-group.mr-2:nth-child(1) > select:nth-child(3)', 0)
 
       await clearQueue(page);
 

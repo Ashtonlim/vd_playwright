@@ -50,22 +50,32 @@ describe("patient", () => {
     await page.click('[placeholder="Search inventory items"]');
   
     // Fill [placeholder="Search inventory items"]
-    await page.fill('[placeholder="Search inventory items"]', 'meds');
-  
+    await page.fill('[placeholder="Search inventory items"]', 'meds1');
+
     // Click text=Medicine
-    await page.click('text=Medicine');
+    await page.click('text=meds1');
   
     // Click button:has-text("Payment")
     await page.click('button:has-text("Payment")');
   
     // Select [object Object]
-    await page.selectOption('text=Payment Methods PayPal(Online)-Offset $0.00 Offset $0.00 Cash Offset - Credit No >> select', '[object Object]');
+    // div:nth-child(1) > div > div.card-header  select
+    await page.selectOption('text=Payment Methods PayPal(Online)-Offset $0.00 Offset $0.00 Cash Offset - Credit No >> select', 'Cash');
+    await page.selectOption('select', 'th');
+
+     // Click [aria-label="Payment Method Amount"]
+    await page.click('[aria-label="Payment Method Amount"]');
+    // Fill [aria-label="Payment Method Amount"]
+    await page.fill('[aria-label="Payment Method Amount"]', '20');
+    // Press Enter
+    await page.press('[aria-label="Payment Method Amount"]', 'Enter');
+
   
     // Click text=Cancel
     await page.click('text=Cancel');
   
     // Click text=PAYMENT
-    await page.click('text=PAYMENT');
+    await page.click('text=MAKE PAYMENT');
   
     // Click button:has-text("Void")
     await page.click('button:has-text("Void")');

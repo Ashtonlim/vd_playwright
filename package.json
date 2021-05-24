@@ -9,6 +9,7 @@
   "scripts": {
     "test": "jest",
     "t": "jest ./tests/doing/template1",
+    "reset": "jest ./tests/resets",
     "rec": "npx playwright codegen --viewport-size=1920,1080 --load-storage=creds.json -o ./codeOutput/out.js https://hub-staging.vaultdragon.com"
   },
   "repository": {
