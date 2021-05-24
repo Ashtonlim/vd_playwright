@@ -48,3 +48,6 @@
  await page.click('text=Ok');
  // Click td:has-text("No data for table")
  await page.click('td:has-text("No data for table")');
+
+//  recordings
+// screenshots

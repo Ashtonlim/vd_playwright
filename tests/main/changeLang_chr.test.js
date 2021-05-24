@@ -33,7 +33,7 @@ afterEach(async () => {
   await teardown(page, path=require('path').basename(__filename))
 });
 
-describe("init VD", () => {
+describe("Simple change lang", () => {
 
   it('change language', async () => {
 

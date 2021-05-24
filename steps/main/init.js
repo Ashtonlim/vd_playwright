@@ -1,7 +1,8 @@
 const { login } = require(process.cwd() + '/steps');
 const { URL, viewport, recordVideo } = require(process.cwd() + '/g');
+const fs = require('fs');
 const storageState = require(process.cwd() + '/creds.json');
-
+// let storageState = {}
 let context;
 let page;
 
@@ -24,6 +25,6 @@ module.exports.init = async (browser, skipLogin = true, recVid=true, contextObj 
 
     return {context, page}
 
-    // fs.writeFileSync('./creds.json', JSON.stringify(await context.storageState()));
+    fs.writeFileSync('./creds.json', JSON.stringify(await context.storageState()));
 
 }

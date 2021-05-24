@@ -29,7 +29,7 @@ afterEach(async () => {
   await teardown(page, path=require('path').basename(__filename))
 });
 
-describe("init VD", () => {
+describe("Patient workflow", () => {
 
   it('Create and delete a patient', async () => {
 

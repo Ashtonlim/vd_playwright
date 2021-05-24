@@ -49,7 +49,7 @@ describe("user creations", () => {
       await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'mau');
 
       // Click text=Maurice Hamilton: ETZ8DAZOJV (1) Tel: +6596080926
-      await page.click('text=Maurice Hamilton: ETZ8DAZOJV (1) Tel: +6596080926');
+      await page.click('text=Maurice Hamilton: ETZ8DAZOJV (1) Tel: +656080926'); // fails here
 
       // Click [placeholder="Search by Patient's Name, NRIC, ID, Mobile Number"]
       await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]');
