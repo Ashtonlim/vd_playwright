@@ -39,7 +39,7 @@ describe("patient", () => {
   
     // Click text=Create Invoice
     await page.click('text=Create Invoice');
-  
+   
     // Select 60924291252b8800127aaeff
     await page.selectOption('text=Provider-Doctor One >> select', '60924291252b8800127aaeff');
   
@@ -58,24 +58,20 @@ describe("patient", () => {
     // Click button:has-text("Payment")
     await page.click('button:has-text("Payment")');
   
-    // Select [object Object]
-    // div:nth-child(1) > div > div.card-header  select
-    await page.selectOption('text=Payment Methods PayPal(Online)-Offset $0.00 Offset $0.00 Cash Offset - Credit No >> select', 'Cash');
-    await page.selectOption('select', 'th');
+    await page.selectOption('text=Payment Methods PayPal(Online)-Offset $0.00 Offset $0.00 Cash Offset - Credit No >> select', {label:'Cash'});
 
-     // Click [aria-label="Payment Method Amount"]
     await page.click('[aria-label="Payment Method Amount"]');
-    // Fill [aria-label="Payment Method Amount"]
     await page.fill('[aria-label="Payment Method Amount"]', '20');
-    // Press Enter
     await page.press('[aria-label="Payment Method Amount"]', 'Enter');
 
+    // Need to wait, clicking make payment too fast doesn't save payment.
+    // Could be that Vue has not triggered
+    await page.waitForTimeout(5000);
   
-    // Click text=Cancel
-    await page.click('text=Cancel');
-  
-    // Click text=PAYMENT
-    await page.click('text=MAKE PAYMENT');
+    await page.click('text=Make Payment');
+
+
+    await page.click('text=PAYMENT');
   
     // Click button:has-text("Void")
     await page.click('button:has-text("Void")');

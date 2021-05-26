@@ -1,7 +1,6 @@
 const { chromium } = require('playwright');
 const { init, teardown, clearQueue } = require(process.cwd() + '/steps');
 const { browserSettings } = require(process.cwd() + '/g');
-const { selDropdownOpt } = require(process.cwd() + '/api');
 
 let browser, context, page;
 
@@ -144,40 +143,23 @@ describe("user creations", () => {
       // Close page
       await page3.close();
 
-      // Select 609242ca95e14e0012915202
       await page.selectOption('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select', '609242ca95e14e0012915202');
-
-      // Click text=Steve Marsh -
       await page.click('text=Steve Marsh -');
-      // assert.equal(page.url(), 'https://hub-staging.vaultdragon.com/patient/detail/608ee95795e14e00129150d3');
-
-      // Click text=Steve Marsh
       await page.click('text=Steve Marsh');
-
-      // Click text=Queue
       await page.click('text=Queue');
-      // assert.equal(page.url(), 'https://hub-staging.vaultdragon.com/queue/list');
-
-      // Select
       await page.selectOption('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select', '');
 
-      await selDropdownOpt(page, '.input-group.mr-2:nth-child(1) > select:nth-child(2)', "Service 1")
-
+      await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(2)', { index: 1 });
       await page.click('text=Steve Marsh -');
       await page.click('text=Steve Marsh');
       await page.click('text=Queue');
+      await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(2)', { index: 0 });
 
-      await selDropdownOpt(page, '.input-group.mr-2:nth-child(1) > select:nth-child(2)', 0)
-
-      await selDropdownOpt(page, '.input-group.mr-2:nth-child(1) > select:nth-child(3)', 1)
-
-      // assert.equal(page.url(), 'https://hub-staging.vaultdragon.com/patient/detail/608ee95795e14e00129150d3');
+      await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(3)', { index: 1 });
       await page.click('text=Steve Marsh -');
       await page.click('text=Steve Marsh');
       await page.click('text=Queue');
-      // assert.equal(page.url(), 'https://hub-staging.vaultdragon.com/queue/list');
-
-      await selDropdownOpt(page, '.input-group.mr-2:nth-child(1) > select:nth-child(3)', 0)
+      await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(3)', { index: 0 });
 
       await clearQueue(page);
 

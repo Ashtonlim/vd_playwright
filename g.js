@@ -4,8 +4,8 @@ const loginURL = `${URL}/login`;
 const QueuePage = `${URL}/queue/list`;
 
 // Settings
-const headless = true;
-const slomo = 0;
+const headless = false;
+const slomo = 20;
 const sspath = `/screenshots`
 const viewport = {
     width: 1480,
