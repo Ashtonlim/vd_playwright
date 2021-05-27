@@ -1,5 +1,8 @@
 // extend and fix existing API by playwright
 
+var dayjs = require('dayjs')
+
+
 // sel = dropdown, index takes priority, else userOpt based on label/text
 // since similar implementaion to page.selectOption(), this fn is obsolete
 const selDropdownOpt = async (page, sel, {userOpt, index}) => {
@@ -23,6 +26,7 @@ const selDropdownOpt = async (page, sel, {userOpt, index}) => {
     }, {userOpt, index}) // must specify opt arg here to add it to pageFn
 }
 
+const get_D_MMM_YYYY = () => dayjs().format('D MMM YYYY')
+
 module.exports.selDropdownOpt = selDropdownOpt;
-
-
+module.exports.get_D_MMM_YYYY = get_D_MMM_YYYY;

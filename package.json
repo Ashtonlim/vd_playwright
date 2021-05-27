@@ -10,6 +10,7 @@
     "test": "jest",
     "t": "jest ./tests/doing/template1",
     "reset": "jest ./tests/resets",
+    "main": "jest ./tests/main",
     "rec": "npx playwright codegen --viewport-size=1920,1080 --load-storage=creds.json -o ./codeOutput/out.js https://hub-staging.vaultdragon.com"
   },
   "repository": {
@@ -30,5 +31,8 @@
     "jest-html-reporters": "^2.1.6",
     "jest-playwright-preset": "^1.5.2",
     "playwright": "^1.11.0"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.5"
   }
 }

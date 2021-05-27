@@ -1,5 +1,5 @@
 const { chromium } = require('playwright');
-const { init, teardown } = require(process.cwd() + '/steps');
+const { init, teardown, clearQueue } = require(process.cwd() + '/steps');
 const { browserSettings } = require(process.cwd() + '/g');
 
 let browser, context, page;
@@ -24,161 +24,124 @@ afterEach(async () => {
 describe("removes data", () => {
 
   it('clear queue in queue list', async () => {
+    await page.click('#settingsbutton__BV_toggle_');
+
+    await Promise.all([
+      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/letterbuilder/list' }*/),
+      page.click('#settingsbutton >> text=Letter Builder')
+    ]);
+
+    await Promise.all([
+      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/letterbuilder/edit/new' }*/),
+      page.click('text=Create New Letter')
+    ]);
+
+    await page.selectOption('text=Type GeneralReferralMedical Certificate >> select', 'Referral');
+    await page.click('[placeholder="Name"]');
+    await page.fill('[placeholder="Name"]', 'Demo referral');
+    await page.click('[placeholder="Letter Given ID"]');
+    await page.fill('[placeholder="Letter Given ID"]', 'Ref01');
+    await page.click('[placeholder="REFERRAL NAME"]');
+    await page.fill('[placeholder="REFERRAL NAME"]', 'Ref Ex');
+    await page.click('[placeholder="REFERRAL LETTER CATEGORY"]');
+    await page.click('[placeholder="REFERRAL DESCRIPTION"]');
+    await page.fill('[placeholder="REFERRAL DESCRIPTION"]', 'ref desc');
+    await page.click('[placeholder="REFERRAL TELEPHONE"]');
+    await page.fill('[placeholder="REFERRAL TELEPHONE"]', '02-8666-7856');
+    await page.click('[placeholder="REFERRAL ADDRESS"]');
+    await page.fill('[placeholder="REFERRAL ADDRESS"]', 'ubi st 5');
+    await page.click('[placeholder="REFERRAL FAX"]');
+    await page.fill('[placeholder="REFERRAL FAX"]', '02-123-123');
+    await page.click('[placeholder="REFERRAL EMAIL"]');
+    await page.fill('[placeholder="REFERRAL EMAIL"]', 'random@vaultdragon.com');
+    await page.click('.container-fluid.previewPrint .form-row .form-group');
+    
+    const sel = '.panel-body div > div:nth-child(5) div:nth-child(3)'
+    await page.selectOption('text=PatientTitleNameNRICGiven IDLocal Name >> select', '{patient.title}');
+
+    await page.selectOption('css=.panel-body div > div:nth-child(5) div:nth-child(2) select', '{date.today_date}');
+    await page.selectOption('css=.panel-body div > div:nth-child(5) div:nth-child(3) select', '{clinic.name}');
+    await page.selectOption('css=.panel-body div > div:nth-child(5) div:nth-child(4) select', '{provider.name}');
+
+
+    await page.selectOption('text=REFERRAL INFONameCategoryDescriptionAddressContact NumberFaxEmail >> select', '{referral.email}');
+    await page.selectOption('text=REFERRAL INFONameCategoryDescriptionAddressContact NumberFaxEmail >> select', '{referral.telephone}');
+    // await page.selectOption('text=DrNameGiven IDRoleMCR NumberEmailMobileNameGiven IDRoleEmailMobileNameGiven IDRo >> select', '{provider.name}');
+    // text=DrNameGiven IDRoleMCR NumberEmailMobileNameGiven IDRoleEmailMobileNameGiven IDRo >> select
+    // text=ClinicNameAddressContactNameAddressContactNameAddressContact >> select
+    // text=DateToday's DateDate (1 Business Day Later)Date (3 Business Days Later)Date (5 B >> select
+
+    await Promise.all([
+      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/letterbuilder/list' }*/),
+      page.click(':nth-match(button:has-text("Create"), 2)')
+    ]);
+
+    await page.isVisible('text=REF01');
     await Promise.all([
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/),
       page.click('text=Queue')
     ]);
-    // Click #popover-3
-    await page.click('#popover-3');
-    // Uncheck text=✓⇅Call #TagsPatientProviderSecondary ProvidersTherapistRoomServiceNotesQueue Sta >> input[type="checkbox"]
-    await page.uncheck('text=✓⇅Call #TagsPatientProviderSecondary ProvidersTherapistRoomServiceNotesQueue Sta >> input[type="checkbox"]');
-    // Uncheck #priority
-    await page.uncheck('#priority');
-    // Uncheck #call_number
-    await page.uncheck('#call_number');
-    // Uncheck #tags
-    await page.uncheck('#tags');
-    // Uncheck #patient
-    await page.uncheck('#patient');
-    // Uncheck #provider
-    await page.uncheck('#provider');
-    // Check #secondaryProviders
-    await page.check('#secondaryProviders');
-    // Uncheck #therapist
-    await page.uncheck('#therapist');
-    // Uncheck #room
-    await page.uncheck('#room');
-    // Uncheck #service
-    await page.uncheck('#service');
-    // Uncheck #visit_notes
-    await page.uncheck('#visit_notes');
-    // Uncheck #queue_status
-    await page.uncheck('#queue_status');
-    // Uncheck #invoice
-    await page.uncheck('#invoice');
-    // Uncheck #clinic
-    await page.uncheck('#clinic');
-    // Uncheck #appointmentTime
-    await page.uncheck('#appointmentTime');
-    // Uncheck #appointmentDetails
-    await page.uncheck('#appointmentDetails');
-    // Uncheck #createdAt
-    await page.uncheck('#createdAt');
-    // Uncheck #start_consult
-    await page.uncheck('#start_consult');
-    // Uncheck #end_consult
-    await page.uncheck('#end_consult');
-    // Uncheck #start_treatment
-    await page.uncheck('#start_treatment');
-    // Uncheck #end_treatment
-    await page.uncheck('#end_treatment');
-    // Uncheck #call
-    await page.uncheck('#call');
-    // Uncheck #printLabel
-    await page.uncheck('#printLabel');
-    // Uncheck #secondaryProviders
-    await page.uncheck('#secondaryProviders');
-    // Click .col-12
-    await page.click('.col-12');
-    // Click #popover-3
-    await page.click('#popover-3');
-    // Check input[type="checkbox"]
-    await page.check('input[type="checkbox"]');
-    // Check #priority
-    await page.check('#priority');
-    // Check #call_number
-    await page.check('#call_number');
-    // Check #tags
-    await page.check('#tags');
-    // Check #patient
-    await page.check('#patient');
-    // Check #provider
-    await page.check('#provider');
-    // Check #secondaryProviders
-    await page.check('#secondaryProviders');
-    // Check #therapist
-    await page.check('#therapist');
-    // Check #room
-    await page.check('#room');
-    // Check #service
-    await page.check('#service');
-    // Check #visit_notes
-    await page.check('#visit_notes');
-    // Check #queue_status
-    await page.check('#queue_status');
-    // Check #invoice
-    await page.check('#invoice');
-    // Check #clinic
-    await page.check('#clinic');
-    // Check #appointmentTime
-    await page.check('#appointmentTime');
-    // Check #appointmentDetails
-    await page.check('#appointmentDetails');
-    // Check #createdAt
-    await page.check('#createdAt');
-    // Check #start_consult
-    await page.check('#start_consult');
-    // Check #end_consult
-    await page.check('#end_consult');
-    // Check #start_treatment
-    await page.check('#start_treatment');
-    // Check #end_treatment
-    await page.check('#end_treatment');
-    // Check #call
-    await page.check('#call');
-    // Check #printLabel
-    await page.check('#printLabel');
-    // Click th:has-text("✓")
-    await page.click('th:has-text("✓")');
-    // Click th:has-text("⇅")
-    await page.click('th:has-text("⇅")');
-    // Click th:has-text("Call #")
-    await page.click('th:has-text("Call #")');
-    // Click th:has-text("Tags")
-    await page.click('th:has-text("Tags")');
-    // Click th:has-text("Patient")
-    await page.click('th:has-text("Patient")');
-    // Click th:has-text("Provider")
-    await page.click('th:has-text("Provider")');
-    // Click th:has-text("Secondary Providers")
-    await page.click('th:has-text("Secondary Providers")');
-    // Click th:has-text("Therapist")
-    await page.click('th:has-text("Therapist")');
-    // Click th:has-text("Room")
-    await page.click('th:has-text("Room")');
-    // Click th:has-text("Service")
-    await page.click('th:has-text("Service")');
-    // Click th:has-text("Notes")
-    await page.click('th:has-text("Notes")');
-    // Click th:has-text("Queue Status")
-    await page.click('th:has-text("Queue Status")');
-    // Click th:has-text("Invoice No.")
-    await page.click('th:has-text("Invoice No.")');
-    // Click th:has-text("Location")
-    await page.click('th:has-text("Location")');
-    // Click th:has-text("Appointment Time")
-    await page.click('th:has-text("Appointment Time")');
-    // Click th:has-text("Appointment Details")
-    await page.click('th:has-text("Appointment Details")');
-    // Click th:has-text("Queue Time")
-    await page.click('th:has-text("Queue Time")');
-    // Click main:has-text("Queue< < May 2021 > SunMonTueWedThuFriSat 12345678910111213141516171819202122232")
-    await page.click('main:has-text("Queue< < May 2021 > SunMonTueWedThuFriSat 12345678910111213141516171819202122232")');
-    // Click :nth-match(td:has-text("No Notes Yet"), 2)
-    await page.click(':nth-match(td:has-text("No Notes Yet"), 2)');
-    // Click th:has-text("Start Consult")
-    await page.click('th:has-text("Start Consult")');
-    // Click th:has-text("End Consult")
-    await page.click('th:has-text("End Consult")');
-    // Click th:has-text("Start Treatment")
-    await page.click('th:has-text("Start Treatment")');
-    // Click th:has-text("End Treatment")
-    await page.click('th:has-text("End Treatment")');
-    // Click :nth-match(th:has-text("Call"), 2)
-    await page.click(':nth-match(th:has-text("Call"), 2)');
-    // Click th:has-text("Patient Label")
-    await page.click('th:has-text("Patient Label")');
+
+    await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]');
+    await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'mau');
+    await page.click('text=Maurice Hamilton: ETZ8DAZOJV (1) Tel: +6596080926');
+
+    await Promise.all([
+      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10' }*/),
+      page.click('text=Maurice Hamilton -')
+    ]);
+
+    await page.click('text=CONSULTATION');
+    await page.click('text=Open a note for May 27, 2021 Visit (Draft)');
+    await page.click('[placeholder="Issue letters and MCs"]');
+    await page.fill('[placeholder="Issue letters and MCs"]', 'ref01');
+    await page.click('#invoice-note-container a div:has-text("Demo referral (REF01)")');
+    await page.click('textarea');
+    await page.click('text=Save Letter');
+    await page.click('text=27 May 2021 Visit Notes > From Date < May 2021 > SunMonTueWedThuFriSat 123456789 >> :nth-match(path, 2)');
+
+    await page.click('text=Queue');
+
+    page.once('dialog', dialog => {
+      console.log(`Dialog message: ${dialog.message()}`);
+      dialog.dismiss().catch(() => {});
+    });
+
+    await page.click('text=Queue');
+
+    await Promise.all([
+      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/),
+      page.click('text=Queue')
+    ]);
+
+
+    // await page.click('#settingsbutton__BV_toggle_');
+    // page.once('dialog', dialog => {
+    //   console.log(`Dialog message: ${dialog.message()}`);
+    //   dialog.dismiss().catch(() => {});
+    // });
+    // await page.click('#settingsbutton__BV_toggle_');
+    // await page.click('#settingsbutton >> text=Letter Builder');
+    await page.click('#settingsbutton__BV_toggle_');
+
+    await Promise.all([
+      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/letterbuilder/list' }*/),
+      page.click('#settingsbutton >> text=Letter Builder')
+    ]);
+
+    // Click [placeholder="Search Table"]
+    await page.click('[placeholder="Search Table"]');
+    // Fill [placeholder="Search Table"]
+    await page.fill('[placeholder="Search Table"]', 'ref01');
+    // Click text=✓
+    await page.click('text=✓');
+    // Click text=Delete
+    await page.click('text=Delete');
+    // Click text=Confirm Delete
+    await page.click('text=Confirm Delete');
   
+
+    
 
 
   })
