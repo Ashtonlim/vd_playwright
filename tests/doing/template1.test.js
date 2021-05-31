@@ -56,7 +56,7 @@ describe("removes data", () => {
     await page.fill('[placeholder="REFERRAL EMAIL"]', 'random@vaultdragon.com');
     await page.click('.container-fluid.previewPrint .form-row .form-group');
     
-    const sel = '.panel-body div > div:nth-child(5) div:nth-child(3)'
+    // const sel = '.panel-body div > div:nth-child(5) div:nth-child(3)'
     await page.selectOption('text=PatientTitleNameNRICGiven IDLocal Name >> select', '{patient.title}');
 
     await page.selectOption('css=.panel-body div > div:nth-child(5) div:nth-child(2) select', '{date.today_date}');
@@ -66,10 +66,7 @@ describe("removes data", () => {
 
     await page.selectOption('text=REFERRAL INFONameCategoryDescriptionAddressContact NumberFaxEmail >> select', '{referral.email}');
     await page.selectOption('text=REFERRAL INFONameCategoryDescriptionAddressContact NumberFaxEmail >> select', '{referral.telephone}');
-    // await page.selectOption('text=DrNameGiven IDRoleMCR NumberEmailMobileNameGiven IDRoleEmailMobileNameGiven IDRo >> select', '{provider.name}');
-    // text=DrNameGiven IDRoleMCR NumberEmailMobileNameGiven IDRoleEmailMobileNameGiven IDRo >> select
-    // text=ClinicNameAddressContactNameAddressContactNameAddressContact >> select
-    // text=DateToday's DateDate (1 Business Day Later)Date (3 Business Days Later)Date (5 B >> select
+
 
     await Promise.all([
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/letterbuilder/list' }*/),
@@ -77,22 +74,54 @@ describe("removes data", () => {
     ]);
 
     await page.isVisible('text=REF01');
-    await Promise.all([
-      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/),
-      page.click('text=Queue')
-    ]);
 
-    await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]');
-    await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'mau');
-    await page.click('text=Maurice Hamilton: ETZ8DAZOJV (1) Tel: +6596080926');
+    await Promise.all([
+      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/),
+      page.click('text=Patient')
+    ]);
 
     await Promise.all([
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10' }*/),
-      page.click('text=Maurice Hamilton -')
+      page.click('tbody >> text=Maurice Hamilton')
     ]);
 
     await page.click('text=CONSULTATION');
-    await page.click('text=Open a note for May 27, 2021 Visit (Draft)');
+
+    await page.selectOption('text=SortCreated - Newest to OldestCreated - Oldest to NewestEdited - Newest to Oldes >> select', 'updatedAt.-1');
+    
+    await page.click('[placeholder="Search inventory items"]');
+    await page.fill('[placeholder="Search inventory items"]', 'meds1');
+    await page.click('a:has-text("MedicineM1meds1")');
+    await page.waitForSelector('text=NameDescriptionDosage InstructionQuantityActionsmeds1 >> :nth-match(path, 2)');
+    await page.click('text=NameDescriptionDosage InstructionQuantityActionsmeds1 >> :nth-match(path, 2)');
+
+    await page.click('[placeholder="Record ICD 10"]');
+    await page.fill('[placeholder="Record ICD 10"]', 'cough');
+    await page.click('text=A37.00 - Whooping cough due to Bordetella pertussis without pneumonia');
+    await page.click('text=Primary Diagnosis Secondary Diagnosis Additional Diagnosis >> :nth-match([placeholder="Record ICD 10"], 2)');
+    await page.fill('text=Primary Diagnosis Secondary Diagnosis Additional Diagnosis >> :nth-match([placeholder="Record ICD 10"], 2)', 'fever');
+    await page.click('i');
+    await page.click('text=Primary Diagnosis Secondary Diagnosis Additional Diagnosis >> button');
+
+
+    await page.click('[placeholder="Issue letters and MCs"]');
+    await page.fill('[placeholder="Issue letters and MCs"]', 'mc1');
+    await page.click('text=Med Cert (MC1)');
+    await page.click('textarea');
+    await page.fill('textarea', 'Location 1 This is a test');
+    await page.click('text=Save Letter');
+    await page.click('text=27 May 2021 Visit Notes > From Date < May 2021 > SunMonTueWedThuFriSat 123456789 >> :nth-match(path, 2)');
+    const [page1] = await Promise.all([
+      page.waitForEvent('popup'),
+      page.click('text=Med CertMedical Certificate >> path')
+    ]);
+
+    await page1.click('text=Location 1 This is a test');
+    await page1.click('text=Location 1 This is a test');
+    await page1.close();
+    await page.waitForTimeout(500)
+    await page.click('text=Med CertMedical Certificate >> :nth-match(path, 3)');
+
     await page.click('[placeholder="Issue letters and MCs"]');
     await page.fill('[placeholder="Issue letters and MCs"]', 'ref01');
     await page.click('#invoice-note-container a div:has-text("Demo referral (REF01)")');
@@ -100,48 +129,25 @@ describe("removes data", () => {
     await page.click('text=Save Letter');
     await page.click('text=27 May 2021 Visit Notes > From Date < May 2021 > SunMonTueWedThuFriSat 123456789 >> :nth-match(path, 2)');
 
-    await page.click('text=Queue');
+    await page.waitForTimeout(500)
+    await page.click('text=Demo referralReferral >> :nth-match(path, 3)');
 
-    page.once('dialog', dialog => {
-      console.log(`Dialog message: ${dialog.message()}`);
-      dialog.dismiss().catch(() => {});
-    });
-
-    await page.click('text=Queue');
-
-    await Promise.all([
-      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/),
-      page.click('text=Queue')
-    ]);
-
-
-    // await page.click('#settingsbutton__BV_toggle_');
-    // page.once('dialog', dialog => {
-    //   console.log(`Dialog message: ${dialog.message()}`);
-    //   dialog.dismiss().catch(() => {});
-    // });
-    // await page.click('#settingsbutton__BV_toggle_');
-    // await page.click('#settingsbutton >> text=Letter Builder');
+    await page.click('text=Save Draft');
+    // await page.waitForTimeout(6000);
+    await page.waitForSelector('#main >> text=Note draft saved successfully');
+    await page.waitForTimeout(1000);
+ 
     await page.click('#settingsbutton__BV_toggle_');
-
     await Promise.all([
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/letterbuilder/list' }*/),
       page.click('#settingsbutton >> text=Letter Builder')
     ]);
 
-    // Click [placeholder="Search Table"]
     await page.click('[placeholder="Search Table"]');
-    // Fill [placeholder="Search Table"]
     await page.fill('[placeholder="Search Table"]', 'ref01');
-    // Click text=✓
-    await page.click('text=✓');
-    // Click text=Delete
+    await page.check('input[name="Inventory_select"]');
     await page.click('text=Delete');
-    // Click text=Confirm Delete
     await page.click('text=Confirm Delete');
-  
-
-    
 
 
   })

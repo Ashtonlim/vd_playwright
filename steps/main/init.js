@@ -2,7 +2,6 @@ const { login } = require(process.cwd() + '/steps');
 const { URL, viewport, recordVideo } = require(process.cwd() + '/g');
 const fs = require('fs');
 const storageState = require(process.cwd() + '/creds.json');
-// let storageState = {}
 let context;
 let page;
 
@@ -17,7 +16,7 @@ module.exports.init = async (browser, skipLogin = true, recVid=false, contextObj
         contextObj = {...contextObj, recordVideo}
     }
 
-    context = await browser.newContext(contextObj);
+    context = await browser.newContext({...contextObj, permissions: ['camera']});
     page = await context.newPage();
     await page.goto(URL);
 

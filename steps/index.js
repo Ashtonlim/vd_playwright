@@ -5,6 +5,8 @@ const fns = {
     ...require('./main/logout'),
     ...require('./data/clearQueue'),
     ...require('./forms/createInvoice'),
+    ...require('./forms/togglePatientFields'),
+
 }
 
 module.exports = fns
