@@ -5,6 +5,7 @@ const fns = {
     ...require('./main/logout'),
     ...require('./data/clearQueue'),
     ...require('./forms/createInvoice'),
+    ...require('./forms/payInvoice'),
     ...require('./forms/togglePatientFields'),
 }
 

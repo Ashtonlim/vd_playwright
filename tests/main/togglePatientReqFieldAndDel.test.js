@@ -49,9 +49,12 @@ describe('Patient workflow', () => {
 
         await page.click('button:has-text("Create Patient")')
 
-        await page.click('text=Nric is required')
+        await page.isVisible('text=Nric is required')
         await page.click('text=NRIC/Passport *Local Name >> input[type="text"]')
         await page.fill('text=NRIC/Passport *Local Name >> input[type="text"]', 's123')
+        await page.click('text=Questionnaire')
+        await page.click('a[role="tab"]:has-text("Corporate / Insurance")')
+        await page.click('a[role="tab"]:has-text("Marketing")')
 
         await Promise.all([
             page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/),
