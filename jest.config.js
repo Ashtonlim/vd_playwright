@@ -1,14 +1,17 @@
 module.exports = {
-    preset: "jest-playwright-preset",
+    preset: 'jest-playwright-preset',
     setupFilesAfterEnv: ['./jest.setup.js'],
-    "reporters": [
-        "default",
-        ["jest-html-reporters", {
-            "publicPath": "./",
-            "filename": "index.html",
-            "expand": true,
-            // "openReport": true
-        }],
+    reporters: [
+        'default',
+        [
+            'jest-html-reporters',
+            {
+                publicPath: './',
+                filename: 'index.html',
+                expand: true,
+                // "openReport": true
+            },
+        ],
     ],
     // reporters: [
     //     "default",

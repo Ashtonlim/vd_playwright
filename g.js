@@ -1,11 +1,11 @@
 // URLs
 const URL = `https://hub-staging.vaultdragon.com`
-const loginURL = `${URL}/login`;
-const QueuePage = `${URL}/queue/list`;
+const loginURL = `${URL}/login`
+const QueuePage = `${URL}/queue/list`
 
 // Settings
-const headless = false;
-const slomo = 0;
+const headless = false
+const slomo = 0
 const sspath = `/screenshots`
 const viewport = {
     width: 1480,
@@ -15,17 +15,16 @@ const viewport = {
 }
 
 const recordVideo = {
-    dir: "./recordings"
+    dir: './recordings',
 }
 
 const browserSettings = {
     slomo,
-    headless
+    headless,
 }
 
-
 // URLs
-module.exports.URL = URL; // will ...url = url cuz issue?
+module.exports.URL = URL // will ...url = url cuz issue?
 module.exports.loginURL = loginURL
 module.exports.QueuePage = QueuePage
 

@@ -1,127 +1,153 @@
-const { chromium } = require('playwright');
-const { init, teardown, clearQueue } = require(process.cwd() + '/steps');
-const { browserSettings } = require(process.cwd() + '/g');
+const { chromium } = require('playwright')
+const { init, teardown, clearQueue } = require(process.cwd() + '/steps')
+const { browserSettings } = require(process.cwd() + '/g')
 
-let browser, context, page;
+let browser, context, page
 
 beforeAll(async () => {
-  browser = await chromium.launch(browserSettings);
-});
+    browser = await chromium.launch(browserSettings)
+})
 
 afterAll(async () => {
-  await browser.close();
-});
+    await browser.close()
+})
 
 beforeEach(async () => {
-  ({ context, page } = await init(browser));
-});
+    ;({ context, page } = await init(browser))
+})
 
 afterEach(async () => {
-  await teardown(page, path = require('path').basename(__filename))
-});
+    await teardown(page, (path = require('path').basename(__filename)))
+})
 
-describe("user creations", () => {
+describe('user creations', () => {
+    it('add and delete patient user', async () => {
+        await Promise.all([
+            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/),
+            page.click('text=Queue'),
+        ])
 
-  it('add and delete patient user', async () => {
-    await Promise.all([
-      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/),
-      page.click('text=Queue')
-    ]);
+        await clearQueue(page)
 
-    await clearQueue(page);
+        await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]')
+        await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'mau')
+        await page.click('text=Maurice Hamilton: ETZ8DAZOJV (1) Tel: +6596080926')
+        await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]')
+        await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]')
+        await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'vir')
+        await page.click('text=Virgie Goodman: ZKK8DUE1VD (2) Tel: +6559372842')
+        await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]')
+        await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'ste')
+        await page.click('text=Steve Marsh: KPNEPZX5NR (3) Tel: +6558986059')
 
-    await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]');
-    await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'mau');
-    await page.click('text=Maurice Hamilton: ETZ8DAZOJV (1) Tel: +6596080926');
-    await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]');
-    await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]');
-    await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'vir');
-    await page.click('text=Virgie Goodman: ZKK8DUE1VD (2) Tel: +6559372842');
-    await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]');
-    await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'ste');
-    await page.click('text=Steve Marsh: KPNEPZX5NR (3) Tel: +6558986059');
+        await page.selectOption(
+            'text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> select',
+            '60924291252b8800127aaeff'
+        )
+        await page.selectOption(
+            'text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> :nth-match(select, 2)',
+            '609242a8252b8800127aaf01'
+        )
+        await page.selectOption(
+            'text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> :nth-match(select, 3)',
+            '609242ca95e14e0012915202'
+        )
+        await page.selectOption(
+            'text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> :nth-match(select, 4)',
+            '609243b9252b8800127aaf13'
+        )
 
-    await page.selectOption('text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> select', '60924291252b8800127aaeff');
-    await page.selectOption('text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> :nth-match(select, 2)', '609242a8252b8800127aaf01');
-    await page.selectOption('text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> :nth-match(select, 3)', '609242ca95e14e0012915202');
-    await page.selectOption('text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> :nth-match(select, 4)', '609243b9252b8800127aaf13');
+        await page.click(':nth-match(span:has-text("No Notes Yet"), 3)')
 
-    await page.click(':nth-match(span:has-text("No Notes Yet"), 3)');
+        await page.click('text=No Notes YetSubmitCancel >> textarea[name="textarea_notes"]')
+        await page.fill(
+            'text=No Notes YetSubmitCancel >> textarea[name="textarea_notes"]',
+            'testing'
+        )
+        await page.click('text=Submit')
+        await page.click('span:has-text("testing")')
 
-    await page.click('text=No Notes YetSubmitCancel >> textarea[name="textarea_notes"]');
-    await page.fill('text=No Notes YetSubmitCancel >> textarea[name="textarea_notes"]', 'testing');
-    await page.click('text=Submit');
-    await page.click('span:has-text("testing")');
+        // await page.click('text=textarea[name="textarea_notes"]');
+        // await page.fill('text=textarea[name="textarea_notes"]', 'update testing');
+        // await page.click('text=Submit');
+        // await page.click('td:has-text("update testing")');
+        // await page.click('text=Cancel');
 
-    // await page.click('text=textarea[name="textarea_notes"]');
-    // await page.fill('text=textarea[name="textarea_notes"]', 'update testing');
-    // await page.click('text=Submit');
-    // await page.click('td:has-text("update testing")');
-    // await page.click('text=Cancel');
+        // Go to https://hub-staging.vaultdragon.com/queue/list
+        await page.goto('https://hub-staging.vaultdragon.com/queue/list')
 
+        await Promise.all([
+            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/608ee95795e14e00129150d3' }*/),
+            page.click('text=Steve Marsh - KPNEPZX5NR - 3'),
+        ])
 
-    // Go to https://hub-staging.vaultdragon.com/queue/list
-    await page.goto('https://hub-staging.vaultdragon.com/queue/list');
+        await page.click('text=Queue')
 
-    await Promise.all([
-      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/608ee95795e14e00129150d3' }*/),
-      page.click('text=Steve Marsh - KPNEPZX5NR - 3')
-    ]);
+        await page.click('text=Steve Marsh -')
+        await page.click('text=Steve Marsh')
 
-    await page.click('text=Queue');
+        await page.click('text=Queue')
 
-    await page.click('text=Steve Marsh -');
-    await page.click('text=Steve Marsh');
+        await page.click(':nth-match(button:has-text("Call"), 3)')
 
-    await page.click('text=Queue');
+        const [page1] = await Promise.all([
+            page.waitForEvent('popup'),
+            page.click('button:has-text("Dashboard")'),
+        ])
 
+        await page1.click('text=10003')
 
-    await page.click(':nth-match(button:has-text("Call"), 3)');
+        await page1.click('text=Room 1')
 
-    const [page1] = await Promise.all([
-      page.waitForEvent('popup'),
-      page.click('button:has-text("Dashboard")')
-    ]);
+        await page1.click('text=Therapist: Therapist One')
 
-    await page1.click('text=10003');
+        // Close page
+        await page1.close()
 
-    await page1.click('text=Room 1');
+        const [page3] = await Promise.all([
+            page.waitForEvent('popup'),
+            page.click(
+                'text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> [aria-label="printPatientLabel"]'
+            ),
+        ])
 
-    await page1.click('text=Therapist: Therapist One');
+        await page3.click('text=Steve Marsh')
 
-    // Close page
-    await page1.close();
+        // Close page
+        await page3.close()
 
-    const [page3] = await Promise.all([
-      page.waitForEvent('popup'),
-      page.click('text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> [aria-label="printPatientLabel"]')
-    ]);
+        await page.selectOption(
+            'text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select',
+            '609242ca95e14e0012915202'
+        )
+        await page.click('text=Steve Marsh -')
+        await page.click('text=Steve Marsh')
+        await page.click('text=Queue')
+        await page.selectOption(
+            'text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select',
+            ''
+        )
 
-    await page3.click('text=Steve Marsh');
+        await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(2)', {
+            index: 1,
+        })
+        await page.click('text=Steve Marsh -')
+        await page.click('text=Steve Marsh')
+        await page.click('text=Queue')
+        await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(2)', {
+            index: 0,
+        })
 
-    // Close page
-    await page3.close();
+        await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(3)', {
+            index: 1,
+        })
+        await page.click('text=Steve Marsh -')
+        await page.click('text=Steve Marsh')
+        await page.click('text=Queue')
+        await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(3)', {
+            index: 0,
+        })
 
-    await page.selectOption('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select', '609242ca95e14e0012915202');
-    await page.click('text=Steve Marsh -');
-    await page.click('text=Steve Marsh');
-    await page.click('text=Queue');
-    await page.selectOption('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select', '');
-
-    await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(2)', { index: 1 });
-    await page.click('text=Steve Marsh -');
-    await page.click('text=Steve Marsh');
-    await page.click('text=Queue');
-    await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(2)', { index: 0 });
-
-    await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(3)', { index: 1 });
-    await page.click('text=Steve Marsh -');
-    await page.click('text=Steve Marsh');
-    await page.click('text=Queue');
-    await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(3)', { index: 0 });
-
-    await clearQueue(page);
-
-  })
-
+        await clearQueue(page)
+    })
 })

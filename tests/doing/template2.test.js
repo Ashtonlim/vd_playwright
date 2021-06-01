@@ -1,30 +1,25 @@
-const { chromium } = require('playwright');
-const { init, teardown } = require(process.cwd() + '/steps');
-const { browserSettings } = require(process.cwd() + '/g');
+const { chromium } = require('playwright')
+const { init, teardown } = require(process.cwd() + '/steps')
+const { browserSettings } = require(process.cwd() + '/g')
 
-let browser, context, page;
+let browser, context, page
 
 beforeAll(async () => {
-  browser = await chromium.launch(browserSettings);
-});
+    browser = await chromium.launch(browserSettings)
+})
 
 afterAll(async () => {
-  await browser.close();
-});
+    await browser.close()
+})
 
 beforeEach(async () => {
-  ({context, page} = await init(browser));
-});
+    ;({ context, page } = await init(browser))
+})
 
 afterEach(async () => {
-  await teardown(page, path=require('path').basename(__filename))
-});
+    await teardown(page, (path = require('path').basename(__filename)))
+})
 
-describe("removes data", () => {
-
-  it('clear queue in queue list', async () => {
-
-
-  })
-
+describe('removes data', () => {
+    it('clear queue in queue list', async () => {})
 })

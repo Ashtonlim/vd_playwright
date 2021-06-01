@@ -6,7 +6,6 @@ const fns = {
     ...require('./data/clearQueue'),
     ...require('./forms/createInvoice'),
     ...require('./forms/togglePatientFields'),
-
 }
 
 module.exports = fns
