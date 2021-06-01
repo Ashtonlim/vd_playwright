@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"devclinic.rooms"},{"v":{"$numberInt":"2"},"unique":true,"key":{"givenId":{"$numberInt":"1"}},"name":"givenId_1","ns":"devclinic.rooms","background":true}],"uuid":"03dfe1cfbb1b4fdfa0d50badd7f626ec"}

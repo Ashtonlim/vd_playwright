@@ -13,11 +13,11 @@ afterAll(async () => {
 });
 
 beforeEach(async () => {
-  ({context, page} = await init(browser));
+  ({ context, page } = await init(browser));
 });
 
 afterEach(async () => {
-  await teardown(page, path=require('path').basename(__filename))
+  await teardown(page, path = require('path').basename(__filename))
 });
 
 describe("removes data", () => {
@@ -159,10 +159,10 @@ describe("removes data", () => {
     await page.click('th:has-text("Appointment Details")');
     // Click th:has-text("Queue Time")
     await page.click('th:has-text("Queue Time")');
-    // Click main:has-text("Queue< < May 2021 > SunMonTueWedThuFriSat 12345678910111213141516171819202122232")
-    await page.click('main:has-text("Queue< < May 2021 > SunMonTueWedThuFriSat 12345678910111213141516171819202122232")');
+    // // Click main:has-text("Queue< < May 2021 > SunMonTueWedThuFriSat 12345678910111213141516171819202122232")
+    // await page.click('main:has-text("Queue< < May 2021 > SunMonTueWedThuFriSat 12345678910111213141516171819202122232")');
     // Click :nth-match(td:has-text("No Notes Yet"), 2)
-    await page.click(':nth-match(td:has-text("No Notes Yet"), 2)');
+    // await page.click(':nth-match(td:has-text("No Notes Yet"), 2)');
     // Click th:has-text("Start Consult")
     await page.click('th:has-text("Start Consult")');
     // Click th:has-text("End Consult")
@@ -175,7 +175,7 @@ describe("removes data", () => {
     await page.click(':nth-match(th:has-text("Call"), 2)');
     // Click th:has-text("Patient Label")
     await page.click('th:has-text("Patient Label")');
-  
+
 
 
   })
