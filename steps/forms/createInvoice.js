@@ -12,8 +12,4 @@ module.exports.createInvoice = async (page, { invItem = 'meds1' } = {}) => {
     await page.fill('[placeholder="Search inventory items"]', `${invItem}`)
     await page.click(`text=${invItem}`)
     await page.click('button:has-text("Payment")')
-    return (await page.innerText('css=div.card-header.collapsed span.mx-3 > small'))
-        .replace('(Draft)', '')
-        .replace('#', '')
-        .replace(/\s\s+/g, '')
 }
