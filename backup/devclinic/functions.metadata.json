@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"devclinic.functions"},{"v":{"$numberInt":"2"},"unique":true,"key":{"functionId":{"$numberInt":"1"}},"name":"functionId_1","ns":"devclinic.functions","background":true}],"uuid":"8d5276bdd83e460ca3c9d81fb5411b00"}

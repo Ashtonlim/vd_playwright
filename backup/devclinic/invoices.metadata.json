@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"devclinic.invoices"}],"uuid":"1bfc8be2464a44b18264c228adf6a7ed"}

@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"devclinic.otintraopairways"}],"uuid":"984bf6f4d3e94993a922968a5690251d"}

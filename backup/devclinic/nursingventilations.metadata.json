@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"devclinic.nursingventilations"}],"uuid":"7e615db84d8846ce9bb7264b09c92746"}

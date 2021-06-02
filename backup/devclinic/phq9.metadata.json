@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"devclinic.phq9"}],"uuid":"1aeeb11afff64d1383ee8116fb3b0799"}

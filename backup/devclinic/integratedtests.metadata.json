@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"devclinic.integratedtests"},{"v":{"$numberInt":"2"},"unique":true,"key":{"shortenedUuid":{"$numberInt":"1"}},"name":"shortenedUuid_1","ns":"devclinic.integratedtests","background":true}],"uuid":"7f8c4a8cecb14bedbec2047b4f975b2a"}

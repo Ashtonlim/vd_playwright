@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"devclinic.financialcounsellings"}],"uuid":"5601356821c04306b4c52e58621fd4b1"}
