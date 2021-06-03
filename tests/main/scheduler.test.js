@@ -23,7 +23,26 @@ afterEach(async () => {
 describe('removes data', () => {
     it('clear queue in queue list', async () => {
         await page.click('#settingsbutton__BV_toggle_')
+        await Promise.all([
+            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/config' }*/),
+            page.click('#settingsbutton >> text=System Preferences'),
+        ])
+
+        await page.waitForTimeout(1000)
+        await page.click('#main >> text=Appointment')
+
+        await page.waitForSelector(`css=#config__appointment div:nth-child(3) div > input`)
+        await page.$eval('css=#config__appointment div:nth-child(3) div > input', (e) => {
+            while (e.checked !== true) {
+                e.click()
+            }
+        })
+
+        await page.click('button:has-text("Save Details")')
+        await page.isVisible('text=Configuration Updated Successfully')
         await page.click('text=Appointment')
+        await page.isVisible('text=Appointment Waitlist Scheduler')
+
         await Promise.all([
             page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/scheduler/templates/list' }*/),
             page.click('text=Scheduler'),
@@ -198,6 +217,27 @@ describe('removes data', () => {
         await page.isVisible('text=Deleted Template successfully')
 
         await page.click('text=No data for table')
+
+        await page.click('#settingsbutton__BV_toggle_')
+        await Promise.all([
+            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/config' }*/),
+            page.click('#settingsbutton >> text=System Preferences'),
+        ])
+
+        await page.waitForTimeout(1000)
+        await page.click('#main >> text=Appointment')
+
+        await page.waitForSelector(`css=#config__appointment div:nth-child(3) div > input`)
+        await page.$eval('css=#config__appointment div:nth-child(3) div > input', (e) => {
+            while (e.checked === true) {
+                e.click()
+            }
+        })
+
+        await page.click('button:has-text("Save Details")')
+        await page.isVisible('text=Configuration Updated Successfully')
+        await page.click('text=Appointment')
+        await page.isVisible('text=Appointment Waitlist')
     })
 })
 
