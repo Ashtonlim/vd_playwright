@@ -22,10 +22,7 @@ afterEach(async () => {
 
 describe('patient', () => {
     it('create and void an invoice', async () => {
-        await Promise.all([
-            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/),
-            page.click('text=Patient'),
-        ])
+        await Promise.all([page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/), page.click('text=Patient')])
 
         await Promise.all([
             page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10' }*/),

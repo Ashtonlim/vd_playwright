@@ -39,10 +39,7 @@ describe('patient', () => {
             page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/inventory/new' }*/),
             page.click('text=Create Inventory Item'),
         ])
-        await page.selectOption(
-            'text=Type MedicineConsumablesExpendablesProcedureTeleconsult AmountPackageBundleInves >> select',
-            'Package'
-        )
+        await page.selectOption('text=Type MedicineConsumablesExpendablesProcedureTeleconsult AmountPackageBundleInves >> select', 'Package')
         console.log(r)
         await page.click('[placeholder="Name"]')
         await page.fill('[placeholder="Name"]', `bestpack${r}`)
@@ -52,13 +49,8 @@ describe('patient', () => {
         await page.fill('[placeholder="Selling Price"]', '20')
         await page.click('[placeholder="Minimum Selling Price"]')
         await page.fill('[placeholder="Minimum Selling Price"]', '15')
-        await page.click(
-            '[placeholder="Cost Price (Defaults to cost price in batch order if blank)"]'
-        )
-        await page.fill(
-            '[placeholder="Cost Price (Defaults to cost price in batch order if blank)"]',
-            '10'
-        )
+        await page.click('[placeholder="Cost Price (Defaults to cost price in batch order if blank)"]')
+        await page.fill('[placeholder="Cost Price (Defaults to cost price in batch order if blank)"]', '10')
         await page.click('text=Package Items')
         await page.click('[placeholder="Validity Period (in months)"]')
         await page.fill('[placeholder="Validity Period (in months)"]', '5')
@@ -74,10 +66,7 @@ describe('patient', () => {
         ])
         await page.isVisible('text=Inventory Created Successfully')
 
-        await Promise.all([
-            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/),
-            page.click('text=Patient'),
-        ])
+        await Promise.all([page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/), page.click('text=Patient')])
 
         await Promise.all([
             page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10' }*/),

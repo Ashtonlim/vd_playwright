@@ -25,25 +25,17 @@ afterEach(async () => {
 
 describe('removes data', () => {
     it('clear queue in queue list', async () => {
-        await Promise.all([
-            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/),
-            page.click('text=Queue'),
-        ])
+        await Promise.all([page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/), page.click('text=Queue')])
         await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]')
 
         // Fill [placeholder="Search by Patient's Name, NRIC, ID, Mobile Number"]
-        await page.fill(
-            '[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]',
-            'maurice'
-        )
+        await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'maurice')
         await page.click('text=Maurice Hamilton: ETZ8DAZOJV (1) Tel: +6596080926')
         await Promise.all([
             page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10' }*/),
             page.click('text=Maurice Hamilton - ETZ8DAZOJV - 1'),
         ])
-        await page.click(
-            'text=Maurice Hamilton unknown age NRIC/PassportETZ8DAZOJVPatient ID1Date of Birth???M >> button'
-        )
+        await page.click('text=Maurice Hamilton unknown age NRIC/PassportETZ8DAZOJVPatient ID1Date of Birth???M >> button')
         await page.waitForTimeout(3000)
         console.log('hee')
         await page.click('text=Capture Photo')
@@ -52,15 +44,10 @@ describe('removes data', () => {
         await page.waitForTimeout(3000)
         await page.click('text=Capture Photo')
         await page.click('text=Save')
-        await page.click(
-            'text=Maurice Hamilton unknown age NRIC/PassportETZ8DAZOJVPatient ID1Date of Birth???M >> button'
-        )
+        await page.click('text=Maurice Hamilton unknown age NRIC/PassportETZ8DAZOJVPatient ID1Date of Birth???M >> button')
         await page.click('text=Take a Photo')
         await page.click('text=Cancel')
-        await Promise.all([
-            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/),
-            page.click('text=Patient'),
-        ])
+        await Promise.all([page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/), page.click('text=Patient')])
         await page.click('td:has-text("Maurice Hamilton")')
         // assert.equal(page.url(), 'https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10');
     })
