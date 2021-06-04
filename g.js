@@ -5,7 +5,7 @@ const QueuePage = `${URL}/queue/list`
 
 // Settings
 const headless = false
-const slomo = 80
+const slomo = 500
 const sspath = `/screenshots`
 const viewport = {
     width: 1480,
