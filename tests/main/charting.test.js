@@ -61,10 +61,9 @@ describe('removes data', () => {
             page.click('#settingsbutton >> text=Charting Template Builder'),
         ])
 
-        // document.querySelector('ul > div > li:nth-child(1)')
-        // document.querySelector('li:nth-child(1) > span.hide.cursor-pointer')
         await page.waitForTimeout(1000)
 
+        // delete all charting categories
         const chartTemplates = await page.$$('css=ul > div > li')
         console.log(chartTemplates.length)
         for (let i = chartTemplates.length - 1; 0 < i; i--) {
