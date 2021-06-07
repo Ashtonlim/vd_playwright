@@ -11,7 +11,8 @@
     "t": "jest ./tests/doing/template1",
     "reset": "jest ./tests/resets",
     "main": "jest ./tests/main",
-    "rec": "npx playwright codegen --viewport-size=1920,1080 --load-storage=creds.json -o ./codeOutput/out.js https://hub-staging.vaultdragon.com"
+    "rec": "npx playwright codegen --viewport-size=1920,1080 --load-storage=creds.json -o ./codeOutput/out.js https://hub-staging.vaultdragon.com",
+    "emrec": "npx playwright codegen --viewport-size=1920,1080 -o ./codeOutput/out.js https://mail.zoho.com/zm/#mail/folder/inbox/p/1622723244776100001"
   },
   "repository": {
     "type": "git",

@@ -29,7 +29,7 @@ describe('Patient workflow', () => {
         ])
 
         // const id = +Math.random().toString().substring(2)
-        // const pName = 'Avacado Was'
+        // const pName = 'QwaseeDee'
         // const nric = 's12345'
         // const num = 12341234
 

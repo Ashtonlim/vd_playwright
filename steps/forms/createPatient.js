@@ -1,6 +1,6 @@
 module.exports.createPatient = async (
     page,
-    { id = +Math.random().toString().substring(2), pName = 'Avacado Was', nric = 's12345', num = 12341234 } = {}
+    { id = +Math.random().toString().substring(2), pName = 'QwaseeDee', nric = 's12345', num = 12341234 } = {}
 ) => {
     await page.click('text=Personal Information')
     await page.click('button:has-text("Create Patient")')
@@ -46,5 +46,6 @@ module.exports.createPatient = async (
         page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/),
         page.click('button:has-text("Create Patient")'),
     ])
+
     return { id, pName, nric, num }
 }
