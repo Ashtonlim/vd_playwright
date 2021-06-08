@@ -105,8 +105,6 @@ describe('removes data', () => {
             await page.click(`text=${pName}: ${nric} (${id}) Tel: +65${num}`)
         }
 
-        await page.reload()
-
         await Promise.all([
             page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/60b98362fb05690013d57b03' }*/),
             page.click('text=QwaseeDee -'),
@@ -150,6 +148,36 @@ describe('removes data', () => {
         await page.click('i')
         await page.click('text=Primary Diagnosis Secondary Diagnosis Additional Diagnosis >> button')
 
+        await page.waitForTimeout(1500)
+        await page.click('text=Save Draft')
+        await page.waitForSelector('#main >> text=Note draft saved successfully')
+        await page.waitForTimeout(2000)
+    })
+
+    it('add mc and ref', async () => {
+        await page.waitForTimeout(500)
+        await page.click('text=Queue')
+        await page.waitForTimeout(1500)
+        let patientInQ = await page.isVisible(`text=${pName} -`)
+        if (patientInQ === false) {
+            await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]')
+            await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'Qwasee')
+            await page.click(`text=${pName}: ${nric} (${id}) Tel: +65${num}`)
+        }
+
+        await Promise.all([
+            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/60b98362fb05690013d57b03' }*/),
+            page.click('text=QwaseeDee -'),
+        ])
+        await page.click('text=CONSULTATION')
+
+        await page.selectOption('text=SortCreated - Newest to OldestCreated - Oldest to NewestEdited - Newest to Oldes >> select', 'updatedAt.-1')
+
+        await page.waitForTimeout(1500)
+        if (await page.isVisible(`text=Open a note for`)) {
+            await page.click('text=Open a note for')
+        }
+
         await page.click('[placeholder="Issue letters and MCs"]')
         await page.fill('[placeholder="Issue letters and MCs"]', 'ref01')
         await page.waitForTimeout(1000)
@@ -177,9 +205,8 @@ describe('removes data', () => {
 
         await page.waitForTimeout(1500)
         await page.click('text=Save Draft')
-        await page.waitForTimeout(6000)
         await page.waitForSelector('#main >> text=Note draft saved successfully')
-        await page.waitForTimeout(1000)
+        await page.waitForTimeout(2000)
 
         await page.click('#settingsbutton__BV_toggle_')
         await Promise.all([

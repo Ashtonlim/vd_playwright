@@ -114,10 +114,10 @@ describe('removes data', () => {
         await page.click('#patientName')
         await page.fill('#patientName', pName)
         await page.click('input[type="number"]')
-        await page.fill('input[type="number"]', '10')
+        await page.fill('input[type="number"]', '20')
 
         await page.click('input[type="email"]')
-        await page.fill('input[type="email"]', 'ashton@vaultdragon.com')
+        await page.fill('input[type="email"]', `${process.env.ZOHOUSR}`)
         await page.click('text=Mobile Number *Select region Singapore Indonesia China Cambodia Thailand Taiwan  >> input[type="text"]')
         await page.fill('text=Mobile Number *Select region Singapore Indonesia China Cambodia Thailand Taiwan  >> input[type="text"]', `+65${num}`)
         await page.selectOption('text=*Please select a medical service Service 1 self-reg1-paypal1 >> select', { label: 'self-reg1-paypal1' })
@@ -175,44 +175,15 @@ describe('removes data', () => {
         await page3.click('text=Save')
 
         await page3.click('text=Confirm & Pay')
-        await page3.click('button:has-text("PayPal")')
-        await page3.click('[placeholder="Email or mobile number"]')
-        await page3.fill('[placeholder="Email or mobile number"]', 'vd-real-123@personal.example.com')
-        await page3.click('text=Next')
-        await page3.click('[placeholder="Password"]')
-        await page3.fill('[placeholder="Password"]', 'VD123987abc')
-        await page3.click('label:has-text("Stay logged in for faster checkout")')
-        await page3.click('label:has-text("Stay logged in for faster checkout")')
-        await page3.click('button:has-text("Log In")')
-        await page3.click('[data-testid="submit-button-initial"]')
-        await page3.click('css=#payment-submit-btn')
-        // await page3.waitForTimeout(5000)
-        // await page3.waitForTimeout(8000)
-
-        await page3.click('text=Your appointment has been confirmed.')
+        await page3.click('text=Bank Transfer')
+        await page3.click('text=Please contact the clinic to show proof of payment.')
         await page3.close()
 
         await page.click('text=Appointment')
         await page.click('a[role="menuitem"]:has-text("Appointment")')
         await page.click(`text=8a ${pName}`)
-        await page.click('text=Appointment Details (Status: Confirmed)')
+        await page.click('text=Appointment Details (Status: Scheduled)')
         await page.click('#delete-appointment')
-
-        await page.waitForTimeout(1000)
-
-        await Promise.all([page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/), page.click('text=Patient')])
-
-        // Click text=tempPatient
-        await Promise.all([
-            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/60bdb4a421026d0019e6c76c' }*/),
-            page.click('text=tempPatient'),
-        ])
-        // Click a[role="tab"]:has-text("INVOICE")
-        await page.click('a[role="tab"]:has-text("INVOICE")')
-        await createInvoice(page)
-        const invNum = await payInvoice(page, { label: 'PayPal(Online)-Offset $20.00' })
-        await page.waitForTimeout(1000)
-        await page.isVisible(`text=#${invNum} (Closed)`)
 
         if ((await page.isVisible(`text=${id} ${nric} ${pName} +65${num} Active Preview >> button`)) === false) {
             await page.goto('https://hub-staging.vaultdragon.com/patient/list')

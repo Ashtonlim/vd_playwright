@@ -105,7 +105,7 @@ describe('removes data', () => {
         await page.click('#patientName')
         await page.fill('#patientName', pName)
         await page.click('input[type="email"]')
-        await page.fill('input[type="email"]', 'ashton@vaultdragon.com')
+        await page.fill('input[type="email"]', `${process.env.ZOHOUSR}`)
         await page.click('text=Mobile Number *Select region Singapore Indonesia China Cambodia Thailand Taiwan  >> input[type="text"]')
         await page.fill('text=Mobile Number *Select region Singapore Indonesia China Cambodia Thailand Taiwan  >> input[type="text"]', `+65${num}`)
         await page.selectOption('text=*Please select a medical service Service 1 >> select', { label: 'self-reg1' })
