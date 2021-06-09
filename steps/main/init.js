@@ -8,7 +8,7 @@ let page
 
 module.exports.init = async (browser, skipLogin = true, recVid = false, contextObj = { viewport }) => {
     if (skipLogin && Object.keys(storageState).length) {
-        console.log('hiopaos')
+        // console.log('hiopaos')
         contextObj = { ...contextObj, storageState }
     }
 

@@ -40,7 +40,9 @@ var dayjs = require('dayjs')
 // module.exports.qweClick = qweClick
 
 const get_D_MMM_YYYY = () => dayjs().format('D MMM YYYY')
+const get_DD_MMM_YYYY = () => dayjs().format('DD MMM YYYY')
 const get_MMM_YYYY = () => dayjs().format('MMM YYYY')
 
 module.exports.get_D_MMM_YYYY = get_D_MMM_YYYY
+module.exports.get_DD_MMM_YYYY = get_DD_MMM_YYYY
 module.exports.get_MMM_YYYY = get_MMM_YYYY

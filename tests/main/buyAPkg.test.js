@@ -1,7 +1,7 @@
 const { chromium } = require('playwright')
 const { init, teardown, createInvoice, payInvoice } = require(process.cwd() + '/steps')
 const { browserSettings } = require(process.cwd() + '/g')
-const { get_D_MMM_YYYY } = require(process.cwd() + '/api')
+const { get_DD_MMM_YYYY } = require(process.cwd() + '/api')
 
 let browser, context, page
 const r = Math.random().toString(36).substring(2)
@@ -71,10 +71,11 @@ describe('patient', () => {
 
         await Promise.all([
             page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10' }*/),
-            page.click('text=Maurice Hamilton'),
+            page.click('text=Steve Marsh'),
         ])
 
         await createInvoice(page, { invItem: `bestpack${r}` })
+        await payInvoice(page)
 
         await page.click('text=Create Invoice')
         // await page.click('text=Invoice Created')
@@ -92,11 +93,12 @@ describe('patient', () => {
         // await page.click('text=Invoice closed')
 
         await page.click('a[role="tab"]:has-text("PACKAGES")')
-        await page.waitForTimeout(5000)
+        await page.waitForTimeout(1000)
         await page.click('[placeholder="Type to search"]')
         await page.fill('[placeholder="Type to search"]', `bestpack${r}`)
-        await page.waitForTimeout(10000)
+        await page.waitForTimeout(1000)
         await page.click('text=Show')
-        await page.click(`text=Item previously redeem on ${get_D_MMM_YYYY()} get by VD Support`)
+        console.log(`Item redeem on ${get_DD_MMM_YYYY()} by VD Support`)
+        await page.click(`text=Item redeem on ${get_DD_MMM_YYYY()} by VD Support`)
     })
 })
