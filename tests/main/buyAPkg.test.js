@@ -98,7 +98,6 @@ describe('patient', () => {
         await page.fill('[placeholder="Type to search"]', `bestpack${r}`)
         await page.waitForTimeout(1000)
         await page.click('text=Show')
-        console.log(`Item redeem on ${get_DD_MMM_YYYY()} by VD Support`)
         await page.click(`text=Item redeem on ${get_DD_MMM_YYYY()} by VD Support`)
     })
 })

@@ -51,18 +51,16 @@ describe('removes data', () => {
 
         await page.click('button:has-text("Toggle Dropdown")')
         const [page3] = await Promise.all([page.waitForEvent('popup'), page.click('text=Print Invoice (Categorized With Diagnosis)')])
-        const x = await page3.isVisible('text=Diagnosis:')
-        console.log(x)
-        if (x) {
-            console.log('correct leh?')
-        }
+        // console.log(await page3.isVisible('text=Diagnosis:')) // results in false, idky?
+
         await pausedSS(page3, { fileName: 'DiagnosisCategorized', path })
         await page3.close()
 
         await page.click('button:has-text("Toggle Dropdown")')
         const [page2] = await Promise.all([page.waitForEvent('popup'), page.click('text=Print Invoice (Categorized)')])
-        await page2.isVisible('text=Procedure')
-        await page2.isVisible('text=Package')
+        await page2.click('text=Medicine')
+        await page2.click('text=Procedure')
+        await page2.click('text=Package')
         await pausedSS(page2, { fileName: 'Categorized', path })
         await page2.close()
 
