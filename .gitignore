@@ -10,8 +10,8 @@ screenshots
 codeOutput
 dist
 docs
+backup
 
-creds.json
 npm-debug.log
 
 scripts/*/*.json
