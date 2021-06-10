@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"devclinic.clinics"},{"v":{"$numberInt":"2"},"unique":true,"key":{"clinicCode":{"$numberInt":"1"}},"name":"clinicCode_1","ns":"devclinic.clinics","background":true}],"uuid":"cb230350d06f4d878ebb304394be781e"}

@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"devclinic.dischargenurses"}],"uuid":"51f5520f0b7f48658c2789d0000c2472"}

@@ -11,6 +11,8 @@ codeOutput
 dist
 docs
 backup
+devclinic
+backup/devclinic
 
 npm-debug.log
 
