@@ -4,7 +4,7 @@ const loginURL = `${URL}/login`
 const QueuePage = `${URL}/queue/list`
 
 // Settings
-const headless = false
+const headless = true
 const slomo = 500
 const sspath = `/screenshots`
 const viewport = {
