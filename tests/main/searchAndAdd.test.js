@@ -1,8 +1,9 @@
 const { chromium } = require('playwright')
-const { init, teardown, clearQueue } = require(process.cwd() + '/steps')
+const { init, teardown, clearQueue, pausedSS } = require(process.cwd() + '/steps')
 const { browserSettings } = require(process.cwd() + '/g')
 
 let browser, context, page
+const path = require('path').basename(__filename)
 
 beforeAll(async () => {
     browser = await chromium.launch(browserSettings)
@@ -17,15 +18,12 @@ beforeEach(async () => {
 })
 
 afterEach(async () => {
-    await teardown(page, (path = require('path').basename(__filename)))
+    await teardown(page, path)
 })
 
 describe('user creations', () => {
     it('add and delete patient user', async () => {
-        await Promise.all([
-            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/),
-            page.click('text=Queue'),
-        ])
+        await Promise.all([page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/queue/list' }*/), page.click('text=Queue')])
 
         await clearQueue(page)
 
@@ -40,10 +38,7 @@ describe('user creations', () => {
         await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'ste')
         await page.click('text=Steve Marsh: KPNEPZX5NR (3) Tel: +6558986059')
 
-        await page.selectOption(
-            'text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> select',
-            '60924291252b8800127aaeff'
-        )
+        await page.selectOption('text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> select', '60924291252b8800127aaeff')
         await page.selectOption(
             'text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> :nth-match(select, 2)',
             '609242a8252b8800127aaf01'
@@ -60,10 +55,7 @@ describe('user creations', () => {
         await page.click(':nth-match(span:has-text("No Notes Yet"), 3)')
 
         await page.click('text=No Notes YetSubmitCancel >> textarea[name="textarea_notes"]')
-        await page.fill(
-            'text=No Notes YetSubmitCancel >> textarea[name="textarea_notes"]',
-            'testing'
-        )
+        await page.fill('text=No Notes YetSubmitCancel >> textarea[name="textarea_notes"]', 'testing')
         await page.click('text=Submit')
         await page.click('span:has-text("testing")')
 
@@ -90,50 +82,34 @@ describe('user creations', () => {
 
         await page.click(':nth-match(button:has-text("Call"), 3)')
 
-        const [page1] = await Promise.all([
-            page.waitForEvent('popup'),
-            page.click('button:has-text("Dashboard")'),
-        ])
-
-        await page1.click('text=10003')
-
-        await page1.click('text=Room 1')
-
-        await page1.click('text=Therapist: Therapist One')
-
-        // Close page
+        const [page1] = await Promise.all([page.waitForEvent('popup'), page.click('button:has-text("Dashboard")')])
+        await page1.isVisible('text=10003')
+        await page1.isVisible('text=Room 1')
+        await page1.isVisible('text=Therapist: Therapist One')
+        await pausedSS(page1, { fileName: 'queueScreen', path })
         await page1.close()
 
-        const [page3] = await Promise.all([
+        const [page2] = await Promise.all([
             page.waitForEvent('popup'),
-            page.click(
-                'text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> [aria-label="printPatientLabel"]'
-            ),
+            page.click('text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> [aria-label="printPatientLabel"]'),
         ])
-
-        await page3.click('text=Steve Marsh')
+        await page2.isVisible('text=Steve Marsh')
+        await pausedSS(page2, { fileName: 'printLabelOfPatientInQ', path })
 
         // Close page
-        await page3.close()
+        await page2.close()
 
         await page.selectOption(
             'text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select',
             '609242ca95e14e0012915202'
         )
-        await page.click('text=Steve Marsh -')
-        await page.click('text=Steve Marsh')
-        await page.click('text=Queue')
-        await page.selectOption(
-            'text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select',
-            ''
-        )
+        await page.isVisible('text=Steve Marsh -')
+        await page.selectOption('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select', '')
 
         await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(2)', {
             index: 1,
         })
-        await page.click('text=Steve Marsh -')
-        await page.click('text=Steve Marsh')
-        await page.click('text=Queue')
+        await page.isVisible('text=Steve Marsh -')
         await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(2)', {
             index: 0,
         })
@@ -141,12 +117,15 @@ describe('user creations', () => {
         await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(3)', {
             index: 1,
         })
-        await page.click('text=Steve Marsh -')
-        await page.click('text=Steve Marsh')
-        await page.click('text=Queue')
+        await page.isVisible('text=Steve Marsh -')
         await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(3)', {
             index: 0,
         })
+
+        await page.click('#popover-3')
+        await page.check('#start_consult')
+        await page.click('button:has-text("Start Consult")')
+        // await page.waitForTimeout(2500) // just to see start consult was clicked
 
         await clearQueue(page)
     })

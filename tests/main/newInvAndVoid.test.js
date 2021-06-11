@@ -4,6 +4,9 @@ const { browserSettings } = require(process.cwd() + '/g')
 const { get_D_MMM_YYYY } = require(process.cwd() + '/api')
 
 let browser, context, page
+// const invNums = []
+const invNums = ['157', '158', '159']
+const path = require('path').basename(__filename)
 
 beforeAll(async () => {
     browser = await chromium.launch(browserSettings)
@@ -18,17 +21,13 @@ beforeEach(async () => {
 })
 
 afterEach(async () => {
-    await teardown(page, (path = require('path').basename(__filename)))
+    await teardown(page, path)
 })
 
 describe('patient invoice', () => {
     it('create and void an invoice and payment + use credit/debit to refund', async () => {
-        await Promise.all([
-            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/),
-            page.click('text=Patient'),
-        ])
+        await Promise.all([page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/), page.click('text=Patient')])
 
-        // Click text=Maurice Hamilton
         await Promise.all([
             page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10' }*/),
             page.click('text=Maurice Hamilton'),
@@ -46,13 +45,8 @@ describe('patient invoice', () => {
 
         await page.selectOption('text=Create Credit/Debit Credit >> select', 'Credit')
         await page.selectOption('text=Mode*OffsetRefund >> select', 'Refund')
-        await page.selectOption(
-            'text=Payment Type Payment type is required for Refund Cash Offset-Credit Note Offset  >> select',
-            'cash'
-        )
-        await page.click(
-            'text=Mode*OffsetRefundPayment Type Payment type is required for Refund Cash Offset-Cr >> input[type="text"]'
-        )
+        await page.selectOption('text=Payment Type Payment type is required for Refund Cash Offset-Credit Note Offset  >> select', 'cash')
+        await page.click('text=Mode*OffsetRefundPayment Type Payment type is required for Refund Cash Offset-Cr >> input[type="text"]')
         await page.fill(
             'text=Mode*OffsetRefundPayment Type Payment type is required for Refund Cash Offset-Cr >> input[type="text"]',
             'testing credit'
@@ -105,10 +99,7 @@ describe('patient invoice', () => {
     })
 
     it('should create multiple invoices; and make multiple and single corporate invoice payments for patient', async () => {
-        await Promise.all([
-            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/),
-            page.click('text=Patient'),
-        ])
+        await Promise.all([page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/), page.click('text=Patient')])
 
         await Promise.all([
             page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10' }*/),
@@ -125,6 +116,8 @@ describe('patient invoice', () => {
                     paymentType: 'text=Corporate Payment Giant Corp 1 >> select',
                 })
             )
+
+            // console.log(`--${}`)
         }
 
         await page.click('text=Invoice')
@@ -133,10 +126,7 @@ describe('patient invoice', () => {
             page.click('text=Corporate Invoice'),
         ])
 
-        await page.selectOption(
-            'text=Status--- Select ---Fully PaidOutstanding >> select',
-            'Outstanding'
-        )
+        await page.selectOption('text=Status--- Select ---Fully PaidOutstanding >> select', 'Outstanding')
         await page.click('text=Generate Report')
         await page.waitForTimeout(1000)
 
@@ -149,13 +139,8 @@ describe('patient invoice', () => {
 
         await page.click('text=Settlement')
         await page.selectOption('select[name="perPageSelect"]', '100')
-        await page.selectOption(
-            'text=ModeCashOffset-Credit NoteOffset - DepositCredit RedeemPayPal (Online) - OffsetB >> select',
-            'Cash'
-        )
-        await page.click(
-            'text=Batch Payments×ModeCashOffset-Credit NoteOffset - DepositCredit RedeemPayPal (On >> input[type="text"]'
-        )
+        await page.selectOption('text=ModeCashOffset-Credit NoteOffset - DepositCredit RedeemPayPal (Online) - OffsetB >> select', 'Cash')
+        await page.click('text=Batch Payments×ModeCashOffset-Credit NoteOffset - DepositCredit RedeemPayPal (On >> input[type="text"]')
         await page.fill(
             'text=Batch Payments×ModeCashOffset-Credit NoteOffset - DepositCredit RedeemPayPal (On >> input[type="text"]',
             'Paying for my employees'
@@ -165,20 +150,13 @@ describe('patient invoice', () => {
         await page.click('input[type="number"]')
         await page.fill('input[type="number"]', '20')
         await page.click(
-            `text=${get_D_MMM_YYYY()} ${invNums.slice(
-                -1
-            )} Maurice Hamilton - 1Giant Corp 1 $ 20.00 $ 20.00 Outstanding >> input[type="number"]`
+            `text=${get_D_MMM_YYYY()} ${invNums.slice(-1)} Maurice Hamilton - 1Giant Corp 1 $ 20.00 $ 20.00 Outstanding >> input[type="number"]`
         )
         await page.click('text=Record Batch')
 
         await page.click('text=Settlement')
-        await page.selectOption(
-            'text=ModeCashOffset-Credit NoteOffset - DepositCredit RedeemPayPal (Online) - OffsetB >> select',
-            'Cash'
-        )
-        await page.click(
-            'text=Batch Payments×ModeCashOffset-Credit NoteOffset - DepositCredit RedeemPayPal (On >> input[type="text"]'
-        )
+        await page.selectOption('text=ModeCashOffset-Credit NoteOffset - DepositCredit RedeemPayPal (Online) - OffsetB >> select', 'Cash')
+        await page.click('text=Batch Payments×ModeCashOffset-Credit NoteOffset - DepositCredit RedeemPayPal (On >> input[type="text"]')
         await page.fill(
             'text=Batch Payments×ModeCashOffset-Credit NoteOffset - DepositCredit RedeemPayPal (On >> input[type="text"]',
             'Paying for my employees'
@@ -188,26 +166,45 @@ describe('patient invoice', () => {
 
         for (let i = 0; i < invNums.length - 1; i++) {
             await page.click(
-                `text=${get_D_MMM_YYYY()} ${
-                    invNums[i]
-                } Maurice Hamilton - 1Giant Corp 1 $ 20.00 $ 20.00 Outstanding >> input[type="number"]`
+                `text=${get_D_MMM_YYYY()} ${invNums[i]} Maurice Hamilton - 1Giant Corp 1 $ 20.00 $ 20.00 Outstanding >> input[type="number"]`
             )
         }
 
         await page.click('text=Amount Remaining: 0.00')
         await page.click('text=Record Batch')
 
-        await page.selectOption(
-            'text=Status--- Select ---Fully PaidOutstanding >> select',
-            'Fully Paid'
-        )
+        // for (let i = 0; i < invNums.length - 1; i++) {}
+    })
+
+    it('should check invoice', async () => {
+        await page.click('text=Invoice')
+        await Promise.all([
+            page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/corporate-invoice/list' }*/),
+            page.click('text=Corporate Invoice'),
+        ])
+        await page.click('text=Generate Report')
+        await page.selectOption('select[name="perPageSelect"]', '100')
+        await page.selectOption('text=Status--- Select ---Fully PaidOutstanding >> select', 'Fully Paid')
 
         for (let i = 0; i < invNums.length - 1; i++) {
-            await page.click(
-                `text=${get_D_MMM_YYYY()} ${
-                    invNums[i]
-                } Maurice Hamilton - 1Giant Corp 1 $ 20.00 $ 0.00 Fully Paid >> td`
-            )
+            await page.isVisible(`text=${get_D_MMM_YYYY()} ${invNums[i]} Maurice Hamilton - 1Giant Corp 1 $ 20.00 $ 0.00 Fully Paid >> td`)
+            // await page.waitForTimeout(500)
+            const [page1] = await Promise.all([
+                page.waitForEvent('popup'),
+                page.click(`text=${get_D_MMM_YYYY()} ${invNums[i]} Maurice Hamilton - 1Giant Corp 1 $ 20.00 $ 0.00 Fully Paid >> svg`),
+            ])
+            await page1.waitForTimeout(2000)
+            await page.screenshot({ path: `./screenshots/${path.replace('test.', '')}printforInvNum${invNums[i]}.png` })
+            await page1.waitForTimeout(2000)
+            // idk how to get the dialog to close
+            // page1.on('dialog', async (dialog) => {
+            //     await dialog.accept()
+            // })
+            // await page1.waitForTimeout(5000)
+            // await page1.click('text=145')
+            // await page1.click('text=meds1')
+
+            await page1.close()
         }
     })
 })

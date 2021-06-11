@@ -10,8 +10,10 @@ screenshots
 codeOutput
 dist
 docs
+backup
+devclinic
+backup/devclinic
 
-creds.json
 npm-debug.log
 
 scripts/*/*.json

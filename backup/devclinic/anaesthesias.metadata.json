@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"devclinic.anaesthesias"}],"uuid":"a41c67b8066f49ef8cec4ae76e968e27"}

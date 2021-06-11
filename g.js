@@ -8,19 +8,19 @@ const headless = false
 const slomo = 0
 const sspath = `/screenshots`
 const viewport = {
-    width: 1480,
-    height: 750,
-    // width: 1920,
-    // height: 1080,
+  width: 1480,
+  height: 750,
+  // width: 1920,
+  // height: 1080,
 }
 
 const recordVideo = {
-    dir: './recordings',
+  dir: './recordings',
 }
 
 const browserSettings = {
-    slomo,
-    headless,
+  slomo,
+  headless,
 }
 
 // URLs

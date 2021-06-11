@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"devclinic.bedlogs"}],"uuid":"f60a9b6c41d64820b50a584ffeddcae1"}

@@ -1,21 +1,14 @@
-const { login } = require(process.cwd() + '/steps')
+// const { login } = require(process.cwd() + '/steps')
+const login = require('./login')
 const { URL, viewport, recordVideo } = require(process.cwd() + '/g')
 const fs = require('fs')
 const storageState = require(process.cwd() + '/creds.json')
 let context
 let page
 
-module.exports.init = async (
-    browser,
-    skipLogin = true,
-    recVid = false,
-    contextObj = { viewport }
-) => {
-    if (
-        skipLogin ||
-        Object.keys(storageState).length ||
-        typeof process.env.storage !== 'undefined'
-    ) {
+module.exports.init = async (browser, skipLogin = true, recVid = false, contextObj = { viewport }) => {
+    if (skipLogin && Object.keys(storageState).length) {
+        // console.log('hiopaos')
         contextObj = { ...contextObj, storageState }
     }
 
@@ -27,8 +20,10 @@ module.exports.init = async (
     page = await context.newPage()
     await page.goto(URL)
 
-    if (!skipLogin) {
-        await login(page)
+    if (skipLogin === false) {
+        // console.log(await login)
+        console.log('login')
+        // await login(page)
     }
 
     return { context, page }

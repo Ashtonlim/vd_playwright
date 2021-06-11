@@ -1,0 +1,5 @@
+use('uilicious');
+x = db.packages.find().limit(120).toArray().map(doc => doc._id)
+db.packages.remove({_id: {$in: x} })
+
+db.packages.find().count()
