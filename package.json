@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "jest",
-    "prod": "jest ./tests/prod",
+    "prod1": "jest ./tests/prod1",
+    "prod2": "jest ./tests/prod2",
     "t": "jest ./tests/doing/template1",
     "reset": "jest ./tests/resets",
     "main": "jest ./tests/main",
