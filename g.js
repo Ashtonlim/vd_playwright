@@ -4,9 +4,12 @@ const loginURL = `${URL}/login`
 const QueuePage = `${URL}/queue/list`
 
 // Settings
+const appPath = './app'
+const appSSPath = `${appPath}/src/public/img`
+const appVidPath = `${appPath}/src/public/vid`
 const headless = false
 const slomo = 0
-const sspath = `/screenshots`
+const SSPath = appSSPath
 const viewport = {
   width: 1480,
   height: 750,
@@ -31,7 +34,7 @@ module.exports.QueuePage = QueuePage
 // Settings
 module.exports.headless = headless
 module.exports.slomo = slomo
-module.exports.sspath = sspath
+module.exports.SSPath = SSPath
 module.exports.viewport = viewport
 module.exports.recordVideo = recordVideo
 module.exports.browserSettings = browserSettings

@@ -15,4 +15,5 @@ module.exports.delPatient = async (page, { id, pName, nric, num }) => {
   await page.fill(`[placeholder='${id}']`, `${id}`)
   await page.click('button:has-text("Ok")')
   await page.waitForSelector('text=Patient deleted successfully')
+  await page.waitForTimeout(400)
 }
