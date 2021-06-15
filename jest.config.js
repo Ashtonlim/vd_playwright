@@ -13,6 +13,7 @@ module.exports = {
       },
     ],
   ],
+  testSequencer: 'testSequencer.js',
   // reporters: [
   //     "default",
   //     ["./node_modules/jest-html-reporter", {
