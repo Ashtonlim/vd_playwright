@@ -10,9 +10,38 @@ const { testMatch } = defaults
 
 // TODO: Add the paths to the test suites that need to be run
 // sequentially to this array.
-const sequentialTestPathMatchPatterns = [`<rootDir>/qHistory.test.js`]
+const sequentialTestPathMatchPatterns = [
+  '<rootDir>/addPricingScheme.test.js',
+  '<rootDir>/addProfilePic.test.js',
+  '<rootDir>/bookAppointment.test.js',
+  '<rootDir>/buyAPkg.test.js',
+  '<rootDir>/changeLang.test.js',
+  '<rootDir>/charting.test.js',
+  '<rootDir>/consultNotes.test.js',
+  '<rootDir>/createInv.test.js',
+  '<rootDir>/createPatient.test.js',
+  '<rootDir>/invAutoEmail.test.js',
+  '<rootDir>/membership.test.js',
+  '<rootDir>/membershipAndTrf.test.js',
+  '<rootDir>/newInvAndVoid.test.js',
+  '<rootDir>/patientSummary.test.js',
+  '<rootDir>/payInvWCredit.test.js',
+  '<rootDir>/paypal1_2.test.js',
+  '<rootDir>/paypal3.test.js',
+  '<rootDir>/pharmacy.test.js',
+  '<rootDir>/printAllInvTemplates.test.js',
+  '<rootDir>/qHistory.test.js',
+  '<rootDir>/scheduler.test.js',
+  '<rootDir>/searchAndAdd.test.js',
+  '<rootDir>/selfReg.test.js',
+  '<rootDir>/selfRegCancel.test.js',
+  '<rootDir>/toggleQCols.test.js',
+  '<rootDir>/transferCredits.test.js',
+  '<rootDir>/transferPkg.test.js',
+  '<rootDir>/transferPoints.test.js',
+]
 
-const parallelTestPathIgnorePatterns = [`<rootDir>/p1/*.test.js`]
+const parallelTestPathIgnorePatterns = []
 
 let testPathIgnorePatterns = [...parallelTestPathIgnorePatterns, ...sequentialTestPathMatchPatterns]
 
