@@ -7,11 +7,11 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "jest",
-    "prod1": "jest ./tests/prod1",
-    "prod2": "jest ./tests/prod2",
-    "prod3": "jest ./tests/prod3",
-    "prod4": "jest ./tests/prod4",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:integration": "npm run test:integration:sequential && npm run test:integration:parallel",
+    "test:integration:parallel": "jest --config=__tests__/integration/jest.config.js",
+    "test:integration:sequential": "jest --config=__tests__/integration/jest.config.js --runInBand",
+    "test:unit": "jest --config=__tests__/unit/jest.config.js --passWithNoTests",
     "t": "jest ./tests/doing/template1",
     "reset": "jest ./tests/resets",
     "main": "jest ./tests/main",
@@ -37,8 +37,11 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "jest": "^26.6.3",
+    "jest-config": "^26.6.3",
     "jest-html-reporters": "^2.1.6",
     "jest-playwright-preset": "^1.5.2",
+    "klaw-sync": "^6.0.0",
+    "micromatch": "^4.0.4",
     "playwright": "^1.11.0",
     "prettier": "^2.3.0"
   },
