@@ -1,7 +1,9 @@
 module.exports.payInvoice = async (page, { label = 'Cash', index = -1, amt = '20', paymentType = 'text=Payment Methods PayPal >> select' } = {}) => {
+  await page.waitForTimeout(1200)
   //   if (index >= 0) {
   //     await page.selectOption(`${paymentType}`, { index })
   //   }
+
   await page.selectOption(`${paymentType}`, { label })
   await page.click('[aria-label="Payment Method Amount"]')
   await page.fill('[aria-label="Payment Method Amount"]', `${amt}`)

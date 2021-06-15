@@ -7,19 +7,14 @@
     "test": "tests"
   },
   "scripts": {
-    "x": "npm run test:prod1 ; npm run test:prod2",
-    "test": "npm-run-all -s -c test:prod1 test:prod2 test:prod3",
-    "test:prod1": "jest ./tests/prod1 --config=tests/prod1/jest.config.js",
-    "test:prod2": "jest ./tests/prod2 --config=tests/prod2/jest.config.js",
-    "test:prod3": "jest ./tests/prod3 --config=tests/prod3/jest.config.js",
-    "test:prod4": "jest ./tests/prod4 --config=tests/prod4/jest.config.js",
-    "test:prod5": "jest ./tests/prod5 --config=tests/prod5/jest.config.js",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:integration": "npm run test:integration:sequential && npm run test:integration:parallel",
     "test:integration:parallel": "jest --config=__tests__/integration/jest.config.js",
     "test:integration:sequential": "jest --config=__tests__/integration/jest.config.js --runInBand",
+    "test:unit": "jest --config=__tests__/unit/jest.config.js --passWithNoTests",
     "t": "jest ./tests/doing/template1",
     "reset": "jest ./tests/resets",
     "main": "jest ./tests/main",
-    "jest": "jest",
     "rec": "npx playwright codegen --viewport-size=1920,1080 --load-storage=creds.json -o ./codeOutput/out.js https://hub-staging.vaultdragon.com",
     "emrec": "npx playwright codegen --viewport-size=1920,1080 -o ./codeOutput/out.js https://mail.zoho.com/zm/#mail/folder/inbox/p/1622723244776100001"
   },
@@ -53,7 +48,6 @@
   "dependencies": {
     "aws-sdk": "^2.927.0",
     "dayjs": "^1.10.5",
-    "dotenv": "^10.0.0",
-    "npm-run-all": "^4.1.5"
+    "dotenv": "^10.0.0"
   }
 }
