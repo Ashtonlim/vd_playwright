@@ -9,7 +9,7 @@ const appSSPath = `${appPath}/src/public/img`
 const appVidPath = `${appPath}/src/public/vid`
 const headless = true
 const slomo = 0
-const SSPath = appSSPath
+const SSPath = 'screenshots'
 const viewport = {
   width: 1480,
   height: 750,

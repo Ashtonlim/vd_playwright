@@ -1,6 +1,6 @@
 // extend and fix existing API by playwright
 
-var dayjs = require('dayjs')
+const dayjs = require('dayjs')
 
 // sel = dropdown, index takes priority, else userOpt based on label/text
 // since similar implementaion to page.selectOption(), this fn is obsolete

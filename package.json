@@ -10,6 +10,8 @@
     "test": "jest",
     "prod1": "jest ./tests/prod1",
     "prod2": "jest ./tests/prod2",
+    "prod3": "jest ./tests/prod3",
+    "prod4": "jest ./tests/prod4",
     "t": "jest ./tests/doing/template1",
     "reset": "jest ./tests/resets",
     "main": "jest ./tests/main",
@@ -40,6 +42,7 @@
     "prettier": "^2.3.0"
   },
   "dependencies": {
+    "aws-sdk": "^2.927.0",
     "dayjs": "^1.10.5",
     "dotenv": "^10.0.0"
   }

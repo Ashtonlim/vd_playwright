@@ -84,6 +84,7 @@ describe('removes data', () => {
 
     await page.click('text=Patient')
     await page.waitForTimeout(1500)
+    // await page.waitForSelector(`text=${pName}`)
     let patientExists = await page.isVisible(`text=${pName}`)
 
     console.log(patientExists)
