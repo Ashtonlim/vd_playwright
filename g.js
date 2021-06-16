@@ -1,13 +1,19 @@
+const { defaults } = require('jest-config')
+const { testMatch } = defaults
+
 // URLs
 const URL = `https://hub-staging.vaultdragon.com`
 const loginURL = `${URL}/login`
 const QueuePage = `${URL}/queue/list`
 
+const reportPublicPath = './report/'
+const rootDir = './'
+
 // Settings
 const appPath = './app'
 const appSSPath = `${appPath}/src/public/img`
 const appVidPath = `${appPath}/src/public/vid`
-const headless = false
+const headless = true
 const slomo = 0
 const SSPath = 'screenshots'
 const viewport = {
@@ -38,3 +44,23 @@ module.exports.SSPath = SSPath
 module.exports.viewport = viewport
 module.exports.recordVideo = recordVideo
 module.exports.browserSettings = browserSettings
+
+module.exports.reportProdConfig = {
+  preset: 'jest-playwright-preset',
+  setupFilesAfterEnv: [`${process.cwd()}/jest.setup.js`],
+  reporters: [
+    'default',
+    [
+      'jest-html-reporters',
+      {
+        publicPath: reportPublicPath,
+        filename: 'changeToFolderName.html',
+        expand: true,
+        // "openReport": true
+      },
+    ],
+  ],
+  rootDir,
+  // setupFiles: ['../setup.js'],
+  testMatch,
+}
