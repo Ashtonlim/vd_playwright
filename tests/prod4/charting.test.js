@@ -159,6 +159,7 @@ describe('removes data', () => {
     if (patientExists) {
       await delPatient(page, { id, pName, nric, num })
     }
+    await page.waitForTimeout(2000)
     await Promise.all([
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/new' }*/),
       page.click('button:has-text("Create Patient")'),

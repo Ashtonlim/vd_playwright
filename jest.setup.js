@@ -1,4 +1,15 @@
-const secs = 40
+const fs = require('fs')
+const secs = 80
 jest.setTimeout(secs * 1000)
 
-// --viewport-size=1920,1080
+// global.it = async function (name, func) {
+//   return await test(name, async () => {
+//     try {
+//       await func()
+//     } catch (e) {
+//       await fs.ensureDir('e2e/screenshots')
+//       await page.screenshot({ path: `e2e/screenshots/${name}.png` })
+//       throw e
+//     }
+//   })
+// }
