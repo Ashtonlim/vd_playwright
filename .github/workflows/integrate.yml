@@ -3,7 +3,7 @@ name: playwright CI
 on:
   push:
     branches:
-      - prod
+      - dev
 
 jobs:
   e2e-tests:

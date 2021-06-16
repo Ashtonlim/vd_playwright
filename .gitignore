@@ -2,7 +2,6 @@
 .tmp
 .idea
 .log
-.env
 
 node_modules
 recordings

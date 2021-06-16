@@ -27,6 +27,14 @@ describe('Activate membership and test features', () => {
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10' }*/),
       page.click('text=Maurice Hamilton'),
     ])
+    await page.click('text=MEMBERSHIP')
+    await page.waitForTimeout(800)
+    if (!(await page.isVisible('text=Please activate membership for this patient'))) {
+      await page.click('text=Activate/Deactivate')
+      await page.click('text=Deactivate Membership')
+      await page.click('text=Please activate membership for this patient')
+    }
+
     await page.click('text=Activate')
     await page.waitForTimeout(1000)
     await page.click('text=Select')

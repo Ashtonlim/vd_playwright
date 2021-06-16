@@ -131,15 +131,9 @@ describe('removes data', () => {
       page1.waitForNavigation(/*{ url: 'https://mail.zoho.com/zm/#mail/folder/inbox/p/1622723244776100001' }*/),
       page1.click('text=no-reply@vaultdragon.com'),
     ])
-    // await Promise.all([
-    //     page1.waitForNavigation(/*{ url: 'https://mail.zoho.com/zm/#mail/folder/inbox/p/1622723244776100001' }*/),
-    //     page1.click('text=Appointment Confirmation'),
-    // ])
 
     await page1.waitForTimeout(1000)
 
-    // await pausedSS(page1, { fileName: 'emailConfirmation', path })
-    // const [page3] = await Promise.all([page1.waitForEvent('popup'), page1.click('css=.zmPCnt > div > div > a')])
     const regLink = await page1.getAttribute('css=.zmPCnt > div > div > a', 'href')
     console.log(regLink)
     await page1.close()
