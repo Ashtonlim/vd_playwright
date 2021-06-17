@@ -64,5 +64,3 @@ module.exports.reportProdConfig = {
   // setupFiles: ['../setup.js'],
   testMatch,
 }
-
-// test:prod2 test:prod3 test:prod4 test:prod5 test:prod6 test:prod7 test:prod8
