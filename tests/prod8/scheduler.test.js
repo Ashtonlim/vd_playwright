@@ -124,8 +124,8 @@ describe('able to set template schedules', () => {
     await page.fill('[placeholder="Enter schedule name here..."]', 'test template 1 roll-out')
 
     await page.click('[placeholder="Start date"]')
-    await page.click('tr:nth-child(3) td:nth-child(2) div')
-    await page.click('text=11')
+    await page.click('tr:nth-child(3) td:nth-child(2) div') // 7
+    await page.click('tr:nth-child(3) td:nth-child(6) div') // 11
     await page.selectOption('text=Provider:Please select a providerDoctor One >> select', '60924291252b8800127aaeff')
     await page.selectOption('text=Therapist:Please select a therapistTherapist One >> select', '609242a8252b8800127aaf01')
     await page.click('text=Ok')
@@ -172,10 +172,12 @@ describe('able to set template schedules', () => {
     ])
 
     await page.click('text=Create Available Slot')
-    await page.selectOption('text=Provider:Please select a providerDoctor One >> select', '60924291252b8800127aaeff')
-    await page.selectOption('text=Therapist:Please select a therapistTherapist One >> select', '609242a8252b8800127aaf01')
-    await page.click('text=Select option Service 1 No elements found. Consider changing the search query. L >> :nth-match(div, 2)')
+    await page.selectOption('text=Provider:Please select a provider >> select', '60924291252b8800127aaeff')
+    await page.selectOption('text=Therapist:Please select a therapist >> select', '609242a8252b8800127aaf01')
+    // await page.click('text=Select option Service 1 No elements found. Consider changing the search query. L >> :nth-match(div, 2)')
+    await page.click('text=Select option Service 1  >> :nth-match(div, 2)')
     await page.click('span:has-text("Service 1")')
+
     await page.waitForTimeout(1000)
     await Promise.all([page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/appointment/list' }*/), page.click('text=Save')])
     await page.waitForTimeout(1500)

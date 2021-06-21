@@ -59,12 +59,6 @@ describe('user creations', () => {
     await page.click('text=Submit')
     await page.click('span:has-text("testing")')
 
-    // await page.click('text=textarea[name="textarea_notes"]');
-    // await page.fill('text=textarea[name="textarea_notes"]', 'update testing');
-    // await page.click('text=Submit');
-    // await page.click('td:has-text("update testing")');
-    // await page.click('text=Cancel');
-
     // Go to https://hub-staging.vaultdragon.com/queue/list
     await page.goto('https://hub-staging.vaultdragon.com/queue/list')
 
@@ -80,7 +74,7 @@ describe('user creations', () => {
 
     await page.click('text=Queue')
 
-    await page.click(':nth-match(button:has-text("Call"), 3)')
+    await page.click(':nth-match(button:has-text("Call"), 4)') // change back to 3
 
     const [page1] = await Promise.all([page.waitForEvent('popup'), page.click('button:has-text("Dashboard")')])
     await page1.isVisible('text=10003')
@@ -99,17 +93,20 @@ describe('user creations', () => {
     // Close page
     await page2.close()
 
-    await page.selectOption(
-      'text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select',
-      '609242ca95e14e0012915202'
-    )
-    await page.isVisible('text=Steve Marsh -')
-    await page.selectOption('text=-- All Rooms --Room 1-- All Services --Service 1-- All Providers --Doctor One--  >> select', '')
+    await page.waitForTimeout(800)
+
+    await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(1)', {
+      index: 1,
+    })
+    await page.waitForSelector('text=Steve Marsh -')
+    await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(1)', {
+      index: 0,
+    })
 
     await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(2)', {
       index: 1,
     })
-    await page.isVisible('text=Steve Marsh -')
+    await page.waitForSelector('text=Steve Marsh -')
     await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(2)', {
       index: 0,
     })
@@ -117,7 +114,7 @@ describe('user creations', () => {
     await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(3)', {
       index: 1,
     })
-    await page.isVisible('text=Steve Marsh -')
+    await page.waitForSelector('text=Steve Marsh -')
     await page.selectOption('css=.input-group.mr-2:nth-child(1) > select:nth-child(3)', {
       index: 0,
     })
