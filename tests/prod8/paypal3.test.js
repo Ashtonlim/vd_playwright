@@ -114,9 +114,9 @@ describe('removes data', () => {
 
     await page.click('input[type="email"]')
     await page.fill('input[type="email"]', `${process.env.ZOHOUSR}`)
-    await page.click('text=Mobile Number *Select region Singapore Indonesia China Cambodia Thailand Taiwan  >> input[type="text"]')
-    await page.fill('text=Mobile Number *Select region Singapore Indonesia China Cambodia Thailand Taiwan  >> input[type="text"]', `+65${num}`)
-    await page.selectOption('text=*Please select a medical service Service 1 self-reg1-paypal1 >> select', { label: 'self-reg1-paypal1' })
+    await page.click('text=Mobile Number *Select region Singapore >> input[type="text"]')
+    await page.fill('text=Mobile Number *Select region Singapore >> input[type="text"]', `+65${num}`)
+    await page.selectOption('text=*Please select a medical service >> select', { label: 'self-reg1-paypal1' })
     await page.click('text=Save & Send Self-Registration')
 
     const page1 = await context.newPage()

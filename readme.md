@@ -6,6 +6,10 @@ npm install
 
 Requires .env file. Please contact Shashi if Ashton has left the company for zoho account information.
 
+### Important
+
+Ensure that zoho email ashton@vaultdragon.com is used when running daily deployment. invAutoEmail relies on Maurice's email which is that.
+
 ### Reporters
 
 jest_html_reporters

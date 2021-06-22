@@ -93,6 +93,7 @@ describe('removes data', () => {
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/appointment/list' }*/),
       page.click('a[role="menuitem"]:has-text("Appointment")'),
     ])
+    await page.click('[aria-label="next"]')
     await Promise.all([
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/appointment/new?date=2021-06-22' }*/),
       page.click('tbody >> text=22'),
@@ -106,14 +107,13 @@ describe('removes data', () => {
     await page.fill('#patientName', pName)
     await page.click('input[type="email"]')
     await page.fill('input[type="email"]', `${process.env.ZOHOUSR}`)
-    await page.click('text=Mobile Number *Select region Singapore Indonesia China Cambodia Thailand Taiwan  >> input[type="text"]')
-    await page.fill('text=Mobile Number *Select region Singapore Indonesia China Cambodia Thailand Taiwan  >> input[type="text"]', `+65${num}`)
-    await page.selectOption('text=*Please select a medical service Service 1 >> select', { label: 'sr1' })
+    await page.click('text=Mobile Number *Select region Singapore >> input[type="text"]')
+    await page.fill('text=Mobile Number *Select region Singapore >> input[type="text"]', `+65${num}`)
+    await page.selectOption('text=*Please select a medical service >> select', { label: 'sr1' })
     await page.click('text=Save & Send Self-Registration')
 
     const page1 = await context.newPage()
-    await page1.goto('https://mail.zoho.com/zm/#mail/folder/inbox/p/1622723244776100001')
-    // await page1.click('text=SIGN IN')
+    await page1.goto('https://mail.zoho.com/zm/#mail/folder/inbox')
     await page1.click('[placeholder="Email address or mobile number"]')
 
     await page1.fill('[placeholder="Email address or mobile number"]', `${process.env.ZOHOUSR}`)
@@ -125,15 +125,12 @@ describe('removes data', () => {
       page1.click('button:has-text("Sign in")'),
     ])
 
-    await page1.waitForTimeout(1000)
-
     await Promise.all([
-      page1.waitForNavigation(/*{ url: 'https://mail.zoho.com/zm/#mail/folder/inbox/p/1622723244776100001' }*/),
+      page1.waitForNavigation(/*{ url: 'https://mail.zoho.com/zm/#mail/folder/inbox' }*/),
       page1.click('text=no-reply@vaultdragon.com'),
     ])
 
     await page1.waitForTimeout(1000)
-
     const regLink = await page1.getAttribute('css=.zmPCnt > div > div > a', 'href')
     console.log(regLink)
     await page1.close()
@@ -163,7 +160,6 @@ describe('removes data', () => {
     await page3.dblclick('text=* I accept the terms stated above with respect to the Personal Data Protection A')
     await page3.fill('[placeholder="signatureDate"]', '2021-05-19')
     await page3.click('#signature-pad')
-    await page3.click('#signature-pad')
     await page3.click('text=Save')
 
     await page3.click('#savePatient')
@@ -173,6 +169,7 @@ describe('removes data', () => {
 
     await page.click('text=Appointment')
     await page.click('a[role="menuitem"]:has-text("Appointment")')
+    await page.click('[aria-label="next"]')
     await page.click(`text=8a ${pName}`)
     await page.click('#delete-appointment')
 

@@ -35,23 +35,26 @@ describe('removes data', () => {
         // await page.click('span:has-text("<")')
         await page.click('text=27')
         await page.click('[placeholder="Pick Time Slot"]')
+        // time will not be selected if there alr exists a time
         await page.click('text=08:30')
-
+        await page.selectOption('text=*Please select a medical service >> select', {label: 'Service 1'});
+        
         const r = Math.random().toString(36).substring(2)
         console.log(`Random String is: ${r}`)
         await page.click('textarea')
         await page.fill('textarea', `this is appt details test ${r}`)
-
-        await page.click('text=EmailEmail Templates Template 1 Send Email >> textarea')
-        await page.fill('text=EmailEmail Templates Template 1 Send Email >> textarea', 'this is a send email test')
+        
+        await page.click('text=EmailEmail >> textarea')
+        await page.fill('text=EmailEmail >> textarea', 'this is a send email test')
+        
         await page.click('text=Send Email')
         await page.isVisible('text=Email sent')
 
         await page.click('text=Save')
 
-        if (await page.isEnabled('text=Today')) {
-            await page.click('text=Today')
-        }
+        // if (await page.isEnabled('text=Today')) {
+        //     await page.click('text=Today')
+        // }
 
         await page.click(`a:has-text("8:30a Virgie Goodman | this is appt details test ${r}")`)
         await page.isVisible('text=Appointment Details (Status: Scheduled)')

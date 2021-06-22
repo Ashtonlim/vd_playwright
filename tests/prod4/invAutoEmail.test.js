@@ -71,18 +71,11 @@ describe('removes data', () => {
       page1.waitForNavigation(/*{ url: 'https://accounts.zoho.com/home#profile/personal' }*/),
       page1.click('button:has-text("Sign in")'),
     ])
-    await page1.goto('https://mail.zoho.com/zm/#mail/folder/inbox/p/1622722649873100001')
-    await Promise.all([
-      page1.waitForNavigation(/*{ url: 'https://mail.zoho.com/zm/#mail/folder/inbox/p/1622723244776100001' }*/),
-      page1.click('text=no-reply@vaultdragon.com'),
-    ])
-    await Promise.all([
-      page1.waitForNavigation(/*{ url: 'https://mail.zoho.com/zm/#mail/folder/inbox/p/1622723244776100001' }*/),
-      page1.click('text=Maurice Hamilton_'),
-    ])
-    await page1.click('#topBar >> text=Mail')
-    await page1.click('text=Maurice Hamilton_ .pdf DownloadView20.0 KB >> i')
+    await page1.goto('https://mail.zoho.com/zm/#mail/folder/inbox')
+    page1.click('text=no-reply@vaultdragon.com'),
+    page1.click('text=Maurice Hamilton_'),
     await pausedSS(page1, { fileName: 'emailInvoice', path })
+    await page1.click('text=Maurice Hamilton_.pdfMail >> :nth-match(i, 2)');
     await page1.close()
 
     await page.click('text=Delete')

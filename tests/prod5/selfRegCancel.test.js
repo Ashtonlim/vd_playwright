@@ -97,9 +97,11 @@ describe('removes data', () => {
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/appointment/list' }*/),
       page.click('a[role="menuitem"]:has-text("Appointment")'),
     ])
+
+    await page.click('[aria-label="next"]');
     await Promise.all([
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/appointment/new?date=2021-06-22' }*/),
-      page.click('tbody >> text=22'),
+          page.click('tbody span:has-text("22")')
     ])
 
     await page.click('button:has-text("Create")')
@@ -183,6 +185,7 @@ describe('removes data', () => {
 
     await page.click('text=Appointment')
     await page.click('a[role="menuitem"]:has-text("Appointment")')
+    await page.click('[aria-label="next"]');
     await page.click(`text=8a ${pName}`)
     await page.click('text=Appointment Details (Status: Cancelled)')
     await page.click('#delete-appointment')
