@@ -3,6 +3,8 @@ const { init, teardown, createInvoice, payInvoice } = require(process.cwd() + '/
 const { browserSettings } = require(process.cwd() + '/g')
 
 let browser, context, page
+let failing = true
+const path = require('path').basename(__filename)
 
 beforeAll(async () => {
   browser = await chromium.launch(browserSettings)
@@ -13,11 +15,11 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser))
+  ;({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
-  await teardown(page, (path = require('path').basename(__filename)))
+  await teardown(page, path, failing)
 })
 
 describe('Activate membership and test features', () => {
@@ -69,8 +71,6 @@ describe('Activate membership and test features', () => {
     await page.click(`#main >> text=Successfully deducted ${subP1Pts} points from the balance`)
     await page.waitForTimeout(500)
     await page.isVisible(`text=${_P1Pts + addP1Pts - subP1Pts} Points`)
-
-    // ==============
 
     await page.click('#newbutton__BV_toggle_')
     await Promise.all([
@@ -138,8 +138,6 @@ describe('Activate membership and test features', () => {
     await page.click('#main >> text=Successfully deactivated')
     await page.click('text=Non-Member Activate')
 
-    // ===========
-
     await page.click('text=Patient')
     await page.click('text=Maurice Hamilton')
     await page.click('text=MEMBERSHIP')
@@ -150,5 +148,7 @@ describe('Activate membership and test features', () => {
     await page.isVisible('#main >> text=Successfully deactivated')
     await page.isVisible('text=Non-Member Activate')
     await page.click('#main-content')
+
+    failing = false
   })
 })

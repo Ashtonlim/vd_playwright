@@ -4,7 +4,9 @@ const { browserSettings } = require(process.cwd() + '/g')
 const { get_DD_MMM_YYYY } = require(process.cwd() + '/api')
 
 let browser, context, page
+let failing = true
 const r = Math.random().toString(36).substring(2)
+const path = require('path').basename(__filename)
 
 beforeAll(async () => {
   browser = await chromium.launch(browserSettings)
@@ -15,7 +17,7 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser))
+  ;({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
@@ -28,7 +30,7 @@ afterEach(async () => {
   await page.click('[placeholder="1"]')
   await page.fill('[placeholder="1"]', '1')
   await page.click('text=Ok')
-  await teardown(page, (path = require('path').basename(__filename)))
+  await teardown(page, path, failing)
 })
 
 describe('patient', () => {
@@ -96,5 +98,6 @@ describe('patient', () => {
     await page.waitForTimeout(1000)
     await page.click('text=Show')
     await page.click(`text=Item redeem on ${get_DD_MMM_YYYY()} by VD Support`)
+    failing = false
   })
 })

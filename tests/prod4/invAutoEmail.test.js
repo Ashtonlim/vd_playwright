@@ -4,6 +4,7 @@ const { init, teardown, pausedSS } = require(process.cwd() + '/steps')
 const { browserSettings } = require(process.cwd() + '/g')
 
 let browser, context, page
+let failing = true
 const path = require('path').basename(__filename)
 
 beforeAll(async () => {
@@ -15,11 +16,11 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser))
+  ;({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
-  await teardown(page, path)
+  await teardown(page, path, failing)
 })
 
 describe('removes data', () => {
@@ -72,10 +73,8 @@ describe('removes data', () => {
       page1.click('button:has-text("Sign in")'),
     ])
     await page1.goto('https://mail.zoho.com/zm/#mail/folder/inbox')
-    page1.click('text=no-reply@vaultdragon.com'),
-    page1.click('text=Maurice Hamilton_'),
-    await pausedSS(page1, { fileName: 'emailInvoice', path })
-    await page1.click('text=Maurice Hamilton_.pdfMail >> :nth-match(i, 2)');
+    page1.click('text=no-reply@vaultdragon.com'), page1.click('text=Maurice Hamilton_'), await pausedSS(page1, { fileName: 'emailInvoice', path })
+    await page1.click('text=Maurice Hamilton_.pdfMail >> :nth-match(i, 2)')
     await page1.close()
 
     await page.click('text=Delete')
@@ -93,7 +92,6 @@ describe('removes data', () => {
     await page.fill('text=Patient Name Clinic Name Clinic Address Clinic Phone Appointment Confirmation &  >> textarea', '')
     await page.click('button:has-text("Save Details")')
     await page.isVisible('text=Configuration Updated Successfully')
-    // document.querySelector('#config__invoice div:nth-child(21) div > input').click()
-    // await page.waitForTimeout(3000)
+    failing = false
   })
 })

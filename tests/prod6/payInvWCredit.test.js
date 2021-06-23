@@ -3,6 +3,8 @@ const { init, teardown, createInvoice, payInvoice } = require(process.cwd() + '/
 const { browserSettings } = require(process.cwd() + '/g')
 
 let browser, context, page
+let failing = true
+const path = require('path').basename(__filename)
 
 beforeAll(async () => {
   browser = await chromium.launch(browserSettings)
@@ -13,11 +15,11 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser))
+  ;({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
-  await teardown(page, (path = require('path').basename(__filename)))
+  await teardown(page, path, failing)
 })
 
 describe('patient', () => {
@@ -48,5 +50,6 @@ describe('patient', () => {
     // 20 is cost of meds
     // console.log(+bal.replace(/^\D+/g, '') - 20 + '.00')
     await page.isVisible(`text=Current Credit Balance : $ $${+bal.replace(/^\D+/g, '') - 20 + '.00'}`)
+    failing = false
   })
 })

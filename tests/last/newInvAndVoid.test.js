@@ -93,9 +93,11 @@ describe('patient invoice', () => {
     // await page.goto('https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10');
     await page.click('a[role="tab"]:has-text("INVOICE")')
     await page.isVisible(`text=#${invNum} (Voided)`)
+    failing = false
   })
 
   it('should create multiple invoices; and make multiple and single corporate invoice payments for patient', async () => {
+    failing = true
     await Promise.all([page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/), page.click('text=Patient')])
 
     await Promise.all([
@@ -113,8 +115,6 @@ describe('patient invoice', () => {
           paymentType: 'text=Corporate Payment Giant Corp 1 >> select',
         })
       )
-
-      // console.log(`--${}`)
     }
 
     await page.click('text=Invoice')
@@ -143,7 +143,6 @@ describe('patient invoice', () => {
       'Paying for my employees'
     )
 
-    console.log(invNums)
     await page.click('input[type="number"]')
     await page.fill('input[type="number"]', '20')
     await page.click(
@@ -168,7 +167,7 @@ describe('patient invoice', () => {
     await page.click('text=Amount Remaining: 0.00')
     await page.click('text=Record Batch')
 
-    // for (let i = 0; i < invNums.length - 1; i++) {}
+    failing = false
   })
 
   // it('should check invoice', async () => {

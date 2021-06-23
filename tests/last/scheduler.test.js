@@ -237,34 +237,6 @@ describe('able to set template schedules', () => {
     await page.isVisible('text=Configuration Updated Successfully')
     await page.click('text=Appointment')
     await page.isVisible('text=Appointment Waitlist')
+    failing = false
   })
 })
-
-// await page.waitForTimeout(500)
-// await page.click('#settingsbutton__BV_toggle_');
-// await Promise.all([
-//   page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/config' }*/),
-//   page.click('#settingsbutton >> text=System Preferences')
-// ]);
-
-// await page.click('#main >> text=Appointment');
-// await page.waitForTimeout(1500);
-// await page.click('css=#config__appointment > form > div:nth-child(3) > div > div > div > div > input');
-// await page.click('button:has-text("Save Details")');
-// await page.isVisible('text=Configuration Updated Successfully');
-
-// await page.click('a:has-text("Appointment")');
-// await page.isVisible('text=Appointment Wailist Scheduler');
-
-// await page.click('css=#config__appointment > form > div:nth-child(3) > div > div > div > div > input');
-// await page.click('button:has-text("Save Details")');
-// await page.isVisible('text=Configuration Updated Successfully');
-
-// await Promise.all([
-//   page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/waitlist/list' }*/),
-//   page.click('text=Appointment Waitlist')
-// ]);
-// await page.click('#settingsbutton__BV_toggle_');
-// await page.click('#settingsbutton >> text=System Preferences');
-// // assert.equal(page.url(), 'https://hub-staging.vaultdragon.com/config');
-// await page.click('#main >> text=Appointment');

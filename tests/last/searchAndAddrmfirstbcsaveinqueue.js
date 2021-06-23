@@ -28,14 +28,14 @@ describe('user creations', () => {
     await clearQueue(page)
 
     await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]')
-    await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'mau')
+    await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'Maurice')
     await page.click('text=Maurice Hamilton: ETZ8DAZOJV (1) Tel: +6596080926')
     await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]')
     await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]')
-    await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'vir')
+    await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'Virgie')
     await page.click('text=Virgie Goodman: ZKK8DUE1VD (2) Tel: +6559372842')
     await page.click('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]')
-    await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'ste')
+    await page.fill('[placeholder="Search by Patient\'s Name, NRIC, ID, Mobile Number"]', 'Steve')
     await page.click('text=Steve Marsh: KPNEPZX5NR (3) Tel: +6558986059')
 
     await page.selectOption('text=Steve Marsh - KPNEPZX5NR - 3 - Doctor One - Therapist One - Room 1 - S >> select', '60924291252b8800127aaeff')
@@ -125,5 +125,6 @@ describe('user creations', () => {
     // await page.waitForTimeout(2500) // just to see start consult was clicked
 
     await clearQueue(page)
+    failing = false
   })
 })

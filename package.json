@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "npm-run-all -s -c test:prod8 test:prod1 test:prod2 test:prod3 test:prod4 test:prod5 test:prod6 test:prod7",
+    "test": "npm-run-all -s -c test:last test:prod1 test:prod2 test:prod3 test:prod4 test:prod5 test:prod6 test:prod7 test:prod8 test:prod9",
     "test:prod1": "jest ./tests/prod1 --config=tests/prod1/jest.config.js",
     "test:prod2": "jest ./tests/prod2 --config=tests/prod2/jest.config.js",
     "test:prod3": "jest ./tests/prod3 --config=tests/prod3/jest.config.js",
@@ -15,7 +15,11 @@
     "test:prod5": "jest ./tests/prod5 --config=tests/prod5/jest.config.js",
     "test:prod6": "jest ./tests/prod6 --config=tests/prod6/jest.config.js --passWithNoTests",
     "test:prod7": "jest ./tests/prod7 --config=tests/prod7/jest.config.js --passWithNoTests",
-    "test:prod8": "jest ./tests/prod8 --config=tests/prod8/jest.config.js --runInBand",
+    "test:prod8": "jest ./tests/prod8 --config=tests/prod8/jest.config.js --passWithNoTests",
+    "test:prod9": "jest ./tests/prod9 --config=tests/prod9/jest.config.js --passWithNoTests",
+    "test:prod10": "jest ./tests/prod10 --config=tests/prod10/jest.config.js --passWithNoTests",
+    "test:prod11": "jest ./tests/prod11 --config=tests/prod11/jest.config.js --passWithNoTests",
+    "test:last": "jest ./tests/last --config=tests/last/jest.config.js --runInBand",
     "t": "jest ./tests/doing/template1",
     "reset": "jest ./tests/resets",
     "main": "jest ./tests/main",
@@ -51,7 +55,10 @@
     "prettier": "^2.3.0"
   },
   "dependencies": {
+    "@slack/events-api": "^3.0.1",
+    "@slack/web-api": "^6.2.4",
     "aws-sdk": "^2.927.0",
+    "axios": "^0.21.1",
     "dayjs": "^1.10.5",
     "dotenv": "^10.0.0",
     "npm-run-all": "^4.1.5"

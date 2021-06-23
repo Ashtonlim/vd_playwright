@@ -1,5 +1,5 @@
 const fs = require('fs')
-const secs = 150
+const secs = 80
 jest.setTimeout(secs * 1000)
 
 // global.it = async function (name, func) {

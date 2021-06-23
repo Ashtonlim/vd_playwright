@@ -37,8 +37,6 @@ describe('removes data', () => {
     await page.waitForTimeout(1500)
     let medServiceExists = await page.isVisible(`text=self-reg1-paypal1`)
 
-    console.log(medServiceExists)
-
     if (medServiceExists === false) {
       await Promise.all([
         page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/medservice/upsert' }*/),
@@ -69,10 +67,10 @@ describe('removes data', () => {
       await page.fill('textarea', 'Dear ')
       await page.click('text=Patient Name')
       await page.click('textarea')
-      await page.fill('textarea', 'Dear {patient.name} yr appt w paypal1 payment for {appointment.confirmPaymentLink} --- ')
+      await page.fill('textarea', 'Dear {patient.name} yr appt w paypal1 payment for {appointment.confirmPaymentLink}   |')
       await page.click('text=Add Template')
       await page.click('textarea')
-      await page.fill('textarea', 'Dear {patient.name} yr appt w paypal1 payment for {appointment.confirmPaymentLink} --- {appointment.service} ')
+      await page.fill('textarea', 'Dear {patient.name} yr appt w paypal1 payment for {appointment.confirmPaymentLink}   |')
 
       page.waitForTimeout(1000)
       await Promise.all([
@@ -86,8 +84,6 @@ describe('removes data', () => {
     await page.waitForTimeout(1500)
     let patientExists = await page.isVisible(`text=${pName}`)
 
-    console.log(patientExists)
-
     if (patientExists) {
       await delPatient(page, { id, pName, nric, num })
       await page.waitForTimeout(2200)
@@ -98,9 +94,11 @@ describe('removes data', () => {
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/appointment/list' }*/),
       page.click('a[role="menuitem"]:has-text("Appointment")'),
     ])
+    await page.waitForTimeout(1500)
+    await page.click('[aria-label="next"]')
     await Promise.all([
-      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/appointment/new?date=2021-06-22' }*/),
-      page.click('tbody >> text=22'),
+      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/appointment/new?date=2021-07-12' }*/),
+      page.click('tbody span:has-text("12")'),
     ])
 
     await page.click('button:has-text("Create")')
@@ -140,11 +138,11 @@ describe('removes data', () => {
     await page1.waitForTimeout(1000)
 
     const regLink = await page1.getAttribute('css=.zmPCnt > div > div > a', 'href')
-    console.log(regLink)
     await page1.close()
 
     const page3 = await context.newPage()
     await page3.goto(`${regLink}`)
+    await page3.waitForTimeout(1000)
 
     await page3.fill('[placeholder="Date of Birth"]', '2021-05-11')
     await page3.click('textarea[name="address"]')
@@ -171,15 +169,44 @@ describe('removes data', () => {
     await page3.click('text=Save')
 
     await page3.click('text=Confirm & Pay')
-    await page3.click('text=Bank Transfer')
-    await page3.click('text=Please contact the clinic to show proof of payment.')
+    await page3.click('button:has-text("PayPal")')
+    await page3.click('[placeholder="Email or mobile number"]')
+    await page3.fill('[placeholder="Email or mobile number"]', 'vd-real-123@personal.example.com')
+    await page3.click('text=Next')
+    await page3.click('[placeholder="Password"]')
+    await page3.fill('[placeholder="Password"]', 'VD123987abc')
+    await page3.click('label:has-text("Stay logged in for faster checkout")')
+    await page3.click('label:has-text("Stay logged in for faster checkout")')
+    await page3.click('button:has-text("Log In")')
+    await page3.click('[data-testid="submit-button-initial"]')
+    await page3.waitForTimeout(8000)
+    await page3.click('css=#payment-submit-btn')
+    await page3.waitForTimeout(6000)
+
+    await page3.click('text=Your appointment has been confirmed.')
     await page3.close()
 
     await page.click('text=Appointment')
     await page.click('a[role="menuitem"]:has-text("Appointment")')
+    await page.click('[aria-label="next"]')
     await page.click(`text=8a ${pName}`)
-    await page.click('text=Appointment Details (Status: Scheduled)')
+    await page.click('text=Appointment Details (Status: Confirmed)')
     await page.click('#delete-appointment')
+    failing = false
+  })
+
+  it('should clear data and pay invoice', async () => {
+    failing = true
+    await page.waitForTimeout(1000)
+    await Promise.all([page.waitForNavigation(), page.click('text=Patient')])
+    await page.waitForTimeout(1200)
+    await Promise.all([page.waitForNavigation(), page.click(`text=${pName}`)])
+
+    await page.click('a[role="tab"]:has-text("INVOICE")')
+    await createInvoice(page)
+    const invNum = await payInvoice(page, { index: 0 })
+    await page.waitForTimeout(1000)
+    await page.isVisible(`text=#${invNum} (Closed)`)
 
     if ((await page.isVisible(`text=${id} ${nric} ${pName} +65${num} Active Preview >> button`)) === false) {
       await page.goto('https://hub-staging.vaultdragon.com/patient/list')
@@ -208,7 +235,7 @@ describe('removes data', () => {
     await page.fill(`[placeholder='${id}']`, `${id}`)
     await page.click('button:has-text("Ok")')
     await page.isVisible('Patient deleted successfully')
-    await page.waitForTimeout(2000)
+    await page.waitForTimeout(3000)
 
     await page.click('#settingsbutton__BV_toggle_')
     await page.click('#settingsbutton >> text=Medical Services')
@@ -218,5 +245,6 @@ describe('removes data', () => {
     await page.fill('[placeholder="self-reg1-paypal1"]', 'self-reg1-paypal1')
     await page.click('text=ok')
     await page.click('text=Medical Service self-reg1-paypal1 Deleted Successfully')
+    failing = false
   })
 })

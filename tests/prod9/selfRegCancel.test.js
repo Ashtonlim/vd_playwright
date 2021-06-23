@@ -4,12 +4,14 @@ const { init, teardown, delPatient, pausedSS } = require(process.cwd() + '/steps
 const { browserSettings } = require(process.cwd() + '/g')
 
 let browser, context, page
+let failing = true
 
 const id = 32
 const pName = 'tempPatient'
 const nric = 's1111'
 const num = 12312312
 const path = require('path').basename(__filename)
+
 beforeAll(async () => {
   browser = await chromium.launch(browserSettings)
 })
@@ -19,11 +21,11 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser))
+  ;({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
-  await teardown(page, path)
+  await teardown(page, path, failing)
 })
 
 describe('removes data', () => {
@@ -98,10 +100,10 @@ describe('removes data', () => {
       page.click('a[role="menuitem"]:has-text("Appointment")'),
     ])
 
-    await page.click('[aria-label="next"]');
+    await page.click('[aria-label="next"]')
     await Promise.all([
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/appointment/new?date=2021-06-22' }*/),
-          page.click('tbody span:has-text("22")')
+      page.click('tbody span:has-text("22")'),
     ])
 
     await page.click('button:has-text("Create")')
@@ -185,7 +187,7 @@ describe('removes data', () => {
 
     await page.click('text=Appointment')
     await page.click('a[role="menuitem"]:has-text("Appointment")')
-    await page.click('[aria-label="next"]');
+    await page.click('[aria-label="next"]')
     await page.click(`text=8a ${pName}`)
     await page.click('text=Appointment Details (Status: Cancelled)')
     await page.click('#delete-appointment')
@@ -230,5 +232,6 @@ describe('removes data', () => {
     await page.fill('[placeholder="cancel-self-reg1"]', 'cancel-self-reg1')
     await page.click('text=ok')
     await page.click('text=Medical Service cancel-self-reg1 Deleted Successfully')
+    failing = false
   })
 })

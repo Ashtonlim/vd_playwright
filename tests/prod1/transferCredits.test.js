@@ -3,6 +3,8 @@ const { init, teardown } = require(process.cwd() + '/steps')
 const { browserSettings } = require(process.cwd() + '/g')
 
 let browser, context, page
+let failing = true
+const path = require('path').basename(__filename)
 
 beforeAll(async () => {
   browser = await chromium.launch(browserSettings)
@@ -13,11 +15,11 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser))
+  ;({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
-  await teardown(page, (path = require('path').basename(__filename)))
+  await teardown(page, path, failing)
 })
 
 describe('removes data', () => {
@@ -54,8 +56,8 @@ describe('removes data', () => {
     await page.waitForTimeout(3500)
     await page.click('text=Patient')
     await page.click('text=Steve Marsh')
-    await page.waitForTimeout(500)
-    await page.click('a[role="tab"]:has-text("CREDIT")')
+    await page.waitForSelector('css=a[role="tab"]:has-text("CREDIT")')
+    await page.click('css=a[role="tab"]:has-text("CREDIT")')
     await page.click('[placeholder="Search Table"]')
     await page.fill('[placeholder="Search Table"]', `maurice trf x to steve ${r}`)
     await page.isVisible(`text=maurice trf x to steve ${r}`)
@@ -63,6 +65,6 @@ describe('removes data', () => {
     await page.isVisible('tbody >> text=receive')
     await page.isVisible('text=$1.00')
     await page.isVisible('text=$0.00')
-    // await page.isVisible('span:has-text("$2.00")')
+    failing = false
   })
 })

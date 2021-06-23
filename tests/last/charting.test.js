@@ -38,7 +38,6 @@ const delChartCat = async (page, r) => {
 
   await page.click('.trash path')
   page.once('dialog', (dialog) => {
-    console.log(`Dialog message: ${dialog.message()}`)
     dialog.accept().catch(() => {})
   })
 
@@ -46,7 +45,6 @@ const delChartCat = async (page, r) => {
   await page.waitForTimeout(1000)
   await page.click('text=x')
   page.once('dialog', (dialog) => {
-    console.log(`Dialog message: ${dialog.message()}`)
     dialog.accept().catch(() => {})
   })
 
@@ -65,14 +63,10 @@ describe('removes data', () => {
 
     // delete all charting categories
     const chartTemplates = await page.$$('css=ul > div > li')
-    console.log(chartTemplates.length)
     for (let i = chartTemplates.length - 1; 0 < i; i--) {
-      // console.log(await chartTemplates[i].innerText())
-      console.log(i)
       await page.hover(`css=ul > div > li:nth-child(${i})`)
       await page.click(`css=ul > div > li:nth-child(${i}) > span.cursor-pointer`)
       page.once('dialog', (dialog) => {
-        console.log(`Dialog message: ${dialog.message()}`)
         dialog.accept().catch(() => {})
       })
 
@@ -85,7 +79,6 @@ describe('removes data', () => {
       await page.hover(`css=ul > div > li`)
       await page.click(`css=ul > div > li > span.cursor-pointer`)
       page.once('dialog', (dialog) => {
-        console.log(`Dialog message: ${dialog.message()}`)
         dialog.accept().catch(() => {})
       })
       await page.isVisible('text=Charting category deleted successfully')
@@ -141,7 +134,6 @@ describe('removes data', () => {
     await page.click('.save-icon-wrapper .fa-icon path')
     await page.waitForTimeout(1500)
     while ((await page.$$('css=.fa-icon.fa-pulse')).length > 0) {
-      console.log(await page.isVisible('.fa-icon.fa-pulse'))
       await page.waitForTimeout(1000)
     }
     await page.click('#editing-canvas div div path')
@@ -153,8 +145,6 @@ describe('removes data', () => {
 
     await page.waitForTimeout(1500)
     let patientExists = await page.isVisible(`text=${pName}`)
-
-    console.log(patientExists)
 
     if (patientExists) {
       await delPatient(page, { id, pName, nric, num })
@@ -237,7 +227,6 @@ describe('removes data', () => {
     await page.click('.save-icon-wrapper .fa-icon path')
     await page.waitForTimeout(500)
     while ((await page.$$('css=.fa-icon.fa-pulse')).length > 0) {
-      console.log(await page.isVisible('.fa-icon.fa-pulse'))
       await page.waitForTimeout(1500)
     }
 
@@ -258,8 +247,9 @@ describe('removes data', () => {
     await page.waitForSelector('#main >> text=Note draft saved successfully')
     await page.waitForTimeout(500)
     while ((await page.$$('css=.fa-icon.fa-pulse')).length > 0) {
-      console.log(await page.isVisible('.fa-icon.fa-pulse'))
       await page.waitForTimeout(1500)
     }
+
+    failing = false
   })
 })

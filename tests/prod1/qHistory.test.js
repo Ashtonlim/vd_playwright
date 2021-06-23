@@ -3,6 +3,8 @@ const { init, teardown } = require(process.cwd() + '/steps')
 const { browserSettings } = require(process.cwd() + '/g')
 
 let browser, context, page
+let failing = true
+const path = require('path').basename(__filename)
 
 beforeAll(async () => {
   browser = await chromium.launch(browserSettings)
@@ -13,11 +15,11 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser))
+  ;({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
-  await teardown(page, (path = require('path').basename(__filename)))
+  await teardown(page, path, failing)
 })
 
 describe('removes data', () => {
@@ -30,7 +32,6 @@ describe('removes data', () => {
     await page.click('text=QUEUE HISTORY')
     await page.click('text=No status found')
     await page.click('text=Queue Status History on')
-    await page.click('text=Queue Status History on')
     await page.click('text=27 May 2021 $ 40')
     await page.isVisible('text=2021 2021/05/27 16:41 PM Status: appointment.undefined Location: Location 1 User >> div')
     await page.click('text=20 May 2021 $ 20')
@@ -41,5 +42,6 @@ describe('removes data', () => {
     await page.isVisible('text=2021 2021/05/20 09:22 AM Status: appointment.undefined Location: Location 1 User >> div')
     await page.click('text=Queue Status History on 20 May 2021')
     await page.click('text=Queue Status History on 20 May 2021')
+    failing = false
   })
 })
