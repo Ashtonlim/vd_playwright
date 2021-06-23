@@ -35,8 +35,6 @@ describe('patient', () => {
     await payInvoice(page)
 
     await page.click('a[role="tab"]:has-text("CREDIT")')
-    // await page.click('span:has-text("$40.00")')
-    // await page.click('text=$0.00')
     await page.waitForTimeout(1000)
     const bal = (await page.innerText('text=Current Credit Balance : $ $')).replace(/^\D+/g, '')
 

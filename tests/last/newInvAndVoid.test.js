@@ -4,8 +4,7 @@ const { browserSettings } = require(process.cwd() + '/g')
 const { get_D_MMM_YYYY } = require(process.cwd() + '/api')
 
 let browser, context, page
-// const invNums = []
-const invNums = ['157', '158', '159']
+let failing = true
 const path = require('path').basename(__filename)
 
 beforeAll(async () => {
@@ -17,11 +16,11 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser))
+  ;({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
-  await teardown(page, path)
+  await teardown(page, path, failing)
 })
 
 describe('patient invoice', () => {

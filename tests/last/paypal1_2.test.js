@@ -4,12 +4,14 @@ const { init, teardown, delPatient, pausedSS, createInvoice, payInvoice } = requ
 const { browserSettings } = require(process.cwd() + '/g')
 
 let browser, context, page
+let failing = true
 
 const id = 32
 const pName = 'tempPatient'
 const nric = 's1111'
 const num = 12312312
 const path = require('path').basename(__filename)
+
 beforeAll(async () => {
   browser = await chromium.launch(browserSettings)
 })
@@ -19,11 +21,11 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser))
+  ;({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
-  await teardown(page, path)
+  await teardown(page, path, failing)
 })
 
 describe('removes data', () => {

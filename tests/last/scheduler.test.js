@@ -3,6 +3,8 @@ const { init, teardown } = require(process.cwd() + '/steps')
 const { browserSettings } = require(process.cwd() + '/g')
 
 let browser, context, page
+let failing = true
+const path = require('path').basename(__filename)
 
 beforeAll(async () => {
   browser = await chromium.launch(browserSettings)
@@ -13,11 +15,11 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser))
+  ;({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
-  await teardown(page, (path = require('path').basename(__filename)))
+  await teardown(page, path, failing)
 })
 
 describe('able to set template schedules', () => {

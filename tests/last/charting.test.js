@@ -3,11 +3,14 @@ const { init, teardown, createPatient, delPatient, logout, login, pausedSS } = r
 const { browserSettings } = require(process.cwd() + '/g')
 
 let browser, context, page
+let failing = true
+
 const id = 22
 const pName = 'QwaseeDee'
 const nric = 's12345'
 const num = 12341234
 const r = Math.random().toString(36).substring(2)
+const path = require('path').basename(__filename)
 const path = require('path').basename(__filename)
 
 beforeAll(async () => {
@@ -19,11 +22,11 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser))
+  ;({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
-  await teardown(page, path)
+  await teardown(page, path, failing)
 })
 
 const delChartCat = async (page, r) => {

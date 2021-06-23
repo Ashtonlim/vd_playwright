@@ -7,7 +7,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "npm-run-all -s -c test:last test:prod1 test:prod2 test:prod3 test:prod4 test:prod5 test:prod6 test:prod7 test:prod8 test:prod9",
+    "run": "npm-run-all -s -c test:prod2 test:slack",
+    "test": "npm-run-all -s -c test:last test:prod1 test:prod2 test:prod3 test:prod4 test:prod5 test:prod6 test:prod7 test:prod8",
     "test:prod1": "jest ./tests/prod1 --config=tests/prod1/jest.config.js",
     "test:prod2": "jest ./tests/prod2 --config=tests/prod2/jest.config.js",
     "test:prod3": "jest ./tests/prod3 --config=tests/prod3/jest.config.js",
@@ -20,6 +21,7 @@
     "test:prod10": "jest ./tests/prod10 --config=tests/prod10/jest.config.js --passWithNoTests",
     "test:prod11": "jest ./tests/prod11 --config=tests/prod11/jest.config.js --passWithNoTests",
     "test:last": "jest ./tests/last --config=tests/last/jest.config.js --runInBand",
+    "test:slack": "node slack.js",
     "t": "jest ./tests/doing/template1",
     "reset": "jest ./tests/resets",
     "main": "jest ./tests/main",
