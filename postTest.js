@@ -6,27 +6,27 @@ const { WebClient } = require('@slack/web-api')
 const dayjs = require('dayjs')
 
 const s3 = new AWS.S3()
-const web = new WebClient(process.env.SLACK_TOKEN)
+// const web = new WebClient(process.env.SLACK_TOKEN)
 const r = Math.random().toString(36).substring(8)
 const folderName = `${dayjs().format('YY-MM-DD')}-${r}`
 const bucketName = 'vd-e2e-tests-1'
 const s3Link = `https://s3.console.aws.amazon.com/s3/buckets/${bucketName}?region=ap-southeast-1&prefix=${folderName}/&showversions=false`
 const failedTests = []
 
-const publishMessage = async (channel, text, blocks) => {
-  try {
-    // Call the chat.postMessage method using the built-in WebClient
-    const result = await web.chat.postMessage({
-      channel,
-      text,
-      blocks,
-    })
-    // Print result, which includes information about the message (like TS)
-    // console.log(result)
-  } catch (err) {
-    console.error(err)
-  }
-}
+// const publishMessage = async (channel, text, blocks) => {
+//   try {
+//     // Call the chat.postMessage method using the built-in WebClient
+//     const result = await web.chat.postMessage({
+//       channel,
+//       text,
+//       blocks,
+//     })
+//     // Print result, which includes information about the message (like TS)
+//     // console.log(result)
+//   } catch (err) {
+//     console.error(err)
+//   }
+// }
 
 const uploadDir = (s3Path, bucketName) => {
   const filePaths = []
@@ -67,20 +67,20 @@ uploadDir('recordings', bucketName)
 uploadDir('screenshots', bucketName)
 uploadDir('report', bucketName)
 
-publishMessage('# automated-testing', `Failed tests: ${failedTests.length}\nView reports and recordings at: ${s3Link}`, [
-  {
-    type: 'header',
-    text: {
-      type: 'plain_text',
-      text: `Failed tests: ${failedTests.length}`,
-      emoji: true,
-    },
-  },
-  {
-    type: 'section',
-    text: {
-      type: 'mrkdwn',
-      text: `<${s3Link}|Link to test reports, recordings and screenshots>\n`,
-    },
-  },
-])
+// publishMessage('# automated-testing', `Failed tests: ${failedTests.length}\nView reports and recordings at: ${s3Link}`, [
+//   {
+//     type: 'header',
+//     text: {
+//       type: 'plain_text',
+//       text: `Failed tests: ${failedTests.length}`,
+//       emoji: true,
+//     },
+//   },
+//   {
+//     type: 'section',
+//     text: {
+//       type: 'mrkdwn',
+//       text: `<${s3Link}|Link to test reports, recordings and screenshots>\n`,
+//     },
+//   },
+// ])
