@@ -12,6 +12,8 @@ docs
 backup
 devclinic
 backup/devclinic
+report/prod*.html
+report/last.html
 
 npm-debug.log
 

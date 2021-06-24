@@ -52,8 +52,7 @@ describe('removes data', () => {
     await page.fill('#remarks', `maurice trf x to steve ${r}`)
     await page.click('button:has-text("Transfer")')
     await page.isVisible('text=Credit successfully transfer to: Steve Marsh')
-
-    await page.waitForTimeout(4500)
+    await page.waitForTimeout(7500)
     await page.click('text=Patient')
     await page.click('text=Steve Marsh')
     await page.click('css=a[role="tab"]:has-text("CREDIT")')

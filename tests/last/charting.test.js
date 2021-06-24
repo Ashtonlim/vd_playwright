@@ -11,7 +11,6 @@ const nric = 's12345'
 const num = 12341234
 const r = Math.random().toString(36).substring(2)
 const path = require('path').basename(__filename)
-const path = require('path').basename(__filename)
 
 beforeAll(async () => {
   browser = await chromium.launch(browserSettings)
