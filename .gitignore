@@ -12,7 +12,7 @@ docs
 backup
 devclinic
 backup/devclinic
-report/prod*.html
+report/prod[1-9].html
 report/last.html
 
 npm-debug.log
