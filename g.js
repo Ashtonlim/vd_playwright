@@ -30,6 +30,8 @@ const recordVideo = {
 const browserSettings = {
   slomo,
   headless,
+  chromiumSandbox: false,
+  args: ['--disable-dev-shm-usage'],
 }
 
 // URLs
