@@ -1,8 +1,9 @@
 const Path = require('path')
 const { defaults } = require('jest-config')
+const path = require('path')
 
-// Note: rootDir is relative to the directory containing this file.
 const rootDir = './'
+const dir = path.dirname(__filename).split(path.sep).pop()
 const { testMatch } = defaults
 
 module.exports = {
@@ -13,8 +14,8 @@ module.exports = {
     [
       'jest-html-reporters',
       {
-        publicPath: './',
-        filename: 'prod2.html',
+        publicPath: './report/',
+        filename: `${dir}.html`,
         expand: true,
         // "openReport": true
       },

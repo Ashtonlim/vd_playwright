@@ -40,7 +40,6 @@ describe('patient', () => {
       page.click('text=Create Inventory Item'),
     ])
     await page.selectOption('text=Type MedicineConsumablesExpendablesProcedureTeleconsult AmountPackageBundleInves >> select', 'Package')
-    console.log(r)
     await page.click('[placeholder="Name"]')
     await page.fill('[placeholder="Name"]', `bestpack${r}`)
     await page.click('[placeholder="Given ID"]')
