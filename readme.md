@@ -14,8 +14,6 @@ Run individual groups: `npm run test:prod1`
 
 Ensure that .env uses the zoho email ashton@vaultdragon.com for the daily deployment. invAutoEmail.test.js relies on Maurice's email which is ashton@vaultdragon.com. Change patient's email if .env email is changed.
 
-test
-
 ### Reporters
 
 jest_html_reporters
