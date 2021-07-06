@@ -1,6 +1,6 @@
 require('dotenv').config()
 const { chromium } = require('playwright')
-const { init, teardown } = require(process.cwd() + '/steps')
+const { init, teardown, delPatient, pausedSS, createInvoice, payInvoice } = require(process.cwd() + '/steps')
 const { browserSettings } = require(process.cwd() + '/g')
 
 let browser, context, page

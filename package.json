@@ -43,20 +43,20 @@
     "preset": "jest-playwright-preset"
   },
   "devDependencies": {
-    "eslint": "^7.29.0",
+    "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "jest": "^27.0.5",
-    "jest-config": "^27.0.5",
+    "jest": "^27.0.6",
+    "jest-config": "^27.0.6",
     "jest-html-reporters": "^2.1.6",
-    "jest-playwright-preset": "^1.6.1",
-    "playwright": "^1.12.2",
-    "prettier": "^2.3.1"
+    "jest-playwright-preset": "^1.7.0",
+    "playwright": "^1.12.3",
+    "prettier": "^2.3.2"
   },
   "dependencies": {
     "@slack/events-api": "^3.0.1",
     "@slack/web-api": "^6.2.4",
-    "aws-sdk": "^2.933.0",
+    "aws-sdk": "^2.939.0",
     "axios": "^0.21.1",
     "dayjs": "^1.10.5",
     "dotenv": "^10.0.0",

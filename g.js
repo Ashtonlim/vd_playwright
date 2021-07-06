@@ -2,7 +2,7 @@ const { defaults } = require('jest-config')
 const { testMatch } = defaults
 
 // URLs
-const URL = `https://hub-staging.vaultdragon.com`
+const URL = `https://hub.vaultdragon.com`
 const loginURL = `${URL}/login`
 const QueuePage = `${URL}/queue/list`
 
@@ -13,7 +13,7 @@ const rootDir = './'
 const appPath = './app'
 const appSSPath = `${appPath}/src/public/img`
 const appVidPath = `${appPath}/src/public/vid`
-const headless = true
+const headless = false
 const slomo = 0
 const SSPath = 'screenshots'
 const viewport = {
