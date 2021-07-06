@@ -24,15 +24,17 @@ Run `npm run reset` to clear and reset the data in vaultdragon.com (INCOMPLETED)
 
 ## How tests how designed and structured
 
-/scripts runs scripts interacting with s3.
+./creds.json contains the localstorage info in json (string escaped). When testing on another url (i.e hub.vauldragon.com, hub-dev.vauldragon.com, hub-staging.vauldragon.com), and/or another org code (i.e. uilicicious, e2etesting, demo clinic) please ensure the fields are changed. If unsure, just extract localstorage directly from the browser to get the same behaviour.
 
-/steps contains the most reusable parts of tests, including creating invoices, patients, etc.
+./scripts runs scripts interacting with s3.
 
-/steps/main/init.js contains some of the options for running skipping initial login, recordings flags, etc.
+./steps contains the most reusable parts of tests, including creating invoices, patients, etc.
 
-/steps/main/teardown.js specifies where screenshots should be saved to. Only tests that fail will have a screenshot (unless also written somehwere else in the test to take a screenshot). Each tests ends with a `failing = false` which if not hit, will cause a screenshot to be taken.
+./steps/main/init.js contains some of the options for running skipping initial login, recordings flags, etc.
 
-/tests contains tests grouped in /tests/prodx to run in parallel. There is a higher liklihood of failure upon running too many tests in parallel, keep to 2-4 tests when running in parallel. /test/last runs serially with the --runInBand option as those tests are much longer and failure prone.
+./steps/main/teardown.js specifies where screenshots should be saved to. Only tests that fail will have a screenshot (unless also written somehwere else in the test to take a screenshot). Each tests ends with a `failing = false` which if not hit, will cause a screenshot to be taken.
+
+./tests contains tests grouped in ./tests/prodx to run in parallel. There is a higher liklihood of failure upon running too many tests in parallel, keep to 2-4 tests when running in parallel. ./test/last runs serially with the --runInBand option as those tests are much longer and failure prone.
 
 ## Important
 
@@ -50,7 +52,7 @@ The name of the folder in /tests determines the name of the generated html repor
 
 ## Settings
 
-g.js contains all the global settings. Read the playwright docs to see options for settings.
+g.js contains all the global settings such as resolution, output directories, etc. Read the playwright docs to see options for settings.
 
 creds.json containts the credentials which SHOULD BE ommited in .gitignore as it includes sensitive info. creds.json contains the localstorage objects when a user logs into VD.
 

@@ -1,4 +1,3 @@
-// const { login } = require(process.cwd() + '/steps')
 const login = require('./login')
 const { URL, viewport, recordVideo } = require(process.cwd() + '/g')
 const fs = require('fs')
