@@ -2,7 +2,7 @@ const { defaults } = require('jest-config')
 const { testMatch } = defaults
 
 // URLs
-const URL = `https://hub.vaultdragon.com`
+const URL = `https://hub-staging.vaultdragon.com`
 const loginURL = `${URL}/login`
 const QueuePage = `${URL}/queue/list`
 
