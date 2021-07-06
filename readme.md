@@ -14,6 +14,12 @@ Usage requirements:
 .env file with email account details the Slack token.
 AWS credentails configured
 
+When running on different builds (staging, dev, prod) or org codes, a few things need to be changed:
+
+1. All the page.goto(URLHereHasCorrectPrefix) is correct. Should change to a variable so that it can be changed from one place instead.
+2. Use the correct creds.json
+3. orgCode specified in ./steps/main/login.js
+
 ### How to Record tests (For creating tests)
 
 Run `npm run rec` to open the recorder. A tester can also use testim.io's recorder if they aren't a developer to record a test. Simply copy and paste the code generated into a testName.test.js file.

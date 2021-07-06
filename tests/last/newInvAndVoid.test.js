@@ -16,7 +16,7 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser, path))
+  ; ({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
@@ -86,10 +86,7 @@ describe('patient invoice', () => {
     await page.fill('text=Void Invoice× Confirm >> textarea', 'void invoice test')
     await page.click('text=Confirm')
 
-    // Press r with modifiers
     await page.reload()
-    // Go to https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10
-    // await page.goto('https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10');
     await page.click('a[role="tab"]:has-text("INVOICE")')
     await page.isVisible(`text=#${invNum} (Voided)`)
     failing = false
