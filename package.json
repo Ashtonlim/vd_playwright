@@ -8,7 +8,7 @@
   },
   "scripts": {
     "run": "npm-run-all -s -c test:prod3 test:postRun",
-    "test": "npm-run-all -s -c test:last test:prod1 test:prod2 test:prod3 test:prod4 test:prod5 test:prod6 test:prod7 test:prod8 test:postRun",
+    "test": "npm-run-all -s -c test:postRun",
     "test:prod1": "jest ./tests/prod1 --config=tests/prod1/jest.config.js",
     "test:prod2": "jest ./tests/prod2 --config=tests/prod2/jest.config.js",
     "test:prod3": "jest ./tests/prod3 --config=tests/prod3/jest.config.js",
