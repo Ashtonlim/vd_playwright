@@ -1,4 +1,4 @@
-module.exports.login = async (page, { org = 'uilicious' } = {}) => {
+module.exports.login = async (page, { org = 'e2etesting' } = {}) => {
   await page.click('[placeholder="Organization code"]')
   await page.fill('[placeholder="Organization code"]', org)
   await page.press('[placeholder="Organization code"]', 'Tab')

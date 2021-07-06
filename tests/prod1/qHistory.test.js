@@ -15,7 +15,7 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser, path))
+  ; ({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
@@ -32,16 +32,11 @@ describe('removes data', () => {
     await page.click('text=QUEUE HISTORY')
     await page.click('text=No status found')
     await page.click('text=Queue Status History on')
-    await page.click('text=27 May 2021 $ 40')
-    await page.isVisible('text=2021 2021/05/27 16:41 PM Status: appointment.undefined Location: Location 1 User >> div')
-    await page.click('text=20 May 2021 $ 20')
-    await page.isVisible('text=2021 2021/05/20 15:43 PM Status: appointment. Location: Location 1 User: VD Supp >> div')
-    await page.isVisible('text=2021 2021/05/20 12:19 PM Status: appointment.undefined Location: Location 1 User >> div')
-    await page.click(':nth-match(:text("20 May 2021 $ 20"), 2)')
-    await page.isVisible('text=2021 2021/05/20 15:43 PM Status: appointment. Location: Location 1 User: VD Supp >> div')
-    await page.isVisible('text=2021 2021/05/20 09:22 AM Status: appointment.undefined Location: Location 1 User >> div')
-    await page.click('text=Queue Status History on 20 May 2021')
-    await page.click('text=Queue Status History on 20 May 2021')
+    await page.click('text=30 Jun 2021')
+    await page.isVisible('text=2021 2021/06/30 16:55 PM Status: appointment.undefined Location: Location 1 User >> div')
+    await page.click('text=28 Jun 2021')
+    await page.isVisible('text=2021 2021/06/28 12:28 PM Status: appointment.undefined Location: Location 1 User >> div')
+    await page.click('text=Queue Status History on 28 Jun 2021')
     failing = false
   })
 })
