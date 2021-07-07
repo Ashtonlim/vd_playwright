@@ -18,6 +18,5 @@ report/last.html
 
 npm-debug.log
 
-scripts/*/*.json
 uploads/*
 
