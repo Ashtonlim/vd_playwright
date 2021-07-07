@@ -99,3 +99,7 @@ postTest.js uploads assets to S3 and notifies slack.
 1. How to clear print PDF popups.
 2. Break up most commonly used parts into steps, e.g. appts.
 3. addProfilePic.test.js will probably not work on a server.
+4. For tests w/ email, each login is tracked by zoho as a session. If you do not logout, zoho will continue to include your session and there are only a limited number of sessions (note that this is different from the logins allowed per day). Active sessions need to be regularly cleared @ https://accounts.zoho.com/home#sessions/useractivesessions. The other alternative is to:
+   1. logout of zoho in the test
+   2. Do something like creds.json, save the login state and inject to cookies/localstorage upon browser instantiation. This way, I think it _MIGHT_ be able to bypass the daily login limit too.
+5. -

@@ -10,9 +10,6 @@ const reportPublicPath = './report/'
 const rootDir = './'
 
 // Settings
-const appPath = './app'
-const appSSPath = `${appPath}/src/public/img`
-const appVidPath = `${appPath}/src/public/vid`
 const headless = false
 const slomo = 0
 const SSPath = 'screenshots'
