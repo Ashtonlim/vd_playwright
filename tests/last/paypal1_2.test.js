@@ -1,7 +1,7 @@
 require('dotenv').config()
 const { chromium } = require('playwright')
 const { init, teardown, delPatient, pausedSS, createInvoice, payInvoice } = require(process.cwd() + '/steps')
-const { browserSettings } = require(process.cwd() + '/g')
+const { browserSettings, patientPage } = require(process.cwd() + '/g')
 
 let browser, context, page
 let failing = true
@@ -211,7 +211,7 @@ describe('removes data', () => {
     await page.isVisible(`text=#${invNum} (Closed)`)
 
     if ((await page.isVisible(`text=${id} ${nric} ${pName} +65${num} Active Preview >> button`)) === false) {
-      await page.goto('https://hub-staging.vaultdragon.com/patient/list')
+      await page.goto(patientPage)
       await page.waitForTimeout(1000)
     }
 

@@ -16,7 +16,7 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ; ({ context, page } = await init(browser, path))
+  ;({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
@@ -26,11 +26,7 @@ afterEach(async () => {
 describe('patient invoice', () => {
   it('create and void an invoice and payment + use credit/debit to refund', async () => {
     await Promise.all([page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/), page.click('text=Patient')])
-
-    await Promise.all([
-      page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/608bd53d37feb000126fba10' }*/),
-      page.click('text=Maurice Hamilton'),
-    ])
+    await Promise.all([page.waitForNavigation(), page.click('text=Maurice Hamilton')])
 
     await createInvoice(page)
     const invNum = await payInvoice(page)

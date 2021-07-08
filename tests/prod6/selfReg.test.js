@@ -1,7 +1,7 @@
 require('dotenv').config()
 const { chromium } = require('playwright')
 const { init, teardown, delPatient, pausedSS } = require(process.cwd() + '/steps')
-const { browserSettings } = require(process.cwd() + '/g')
+const { browserSettings, buildType } = require(process.cwd() + '/g')
 
 let browser, context, page
 let failing = true
@@ -179,7 +179,7 @@ describe('removes data', () => {
 
     await Promise.all([page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/list' }*/), page.click('text=Patient')])
     if ((await page.isVisible(`text=${id} ${nric} ${pName} +65${num} Active Preview >> button`)) === false) {
-      await page.goto('https://hub-staging.vaultdragon.com/patient/list')
+      await page.goto(`https://${buildType}.vaultdragon.com/patient/list`)
       await page.waitForTimeout(1000)
     }
 

@@ -6,8 +6,8 @@ module.exports = {
     [
       'jest-html-reporters',
       {
-        publicPath: './app/src/views',
-        filename: 'report.ejs',
+        publicPath: './reportForOtherTests',
+        filename: 'report.html',
         expand: true,
         // "openReport": true
       },

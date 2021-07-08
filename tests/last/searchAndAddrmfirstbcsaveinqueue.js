@@ -1,6 +1,6 @@
 const { chromium } = require('playwright')
 const { init, teardown, clearQueue, pausedSS } = require(process.cwd() + '/steps')
-const { browserSettings } = require(process.cwd() + '/g')
+const { browserSettings, queuePage } = require(process.cwd() + '/g')
 
 let browser, context, page
 const path = require('path').basename(__filename)
@@ -59,8 +59,7 @@ describe('user creations', () => {
     await page.click('text=Submit')
     await page.click('span:has-text("testing")')
 
-    // Go to https://hub-staging.vaultdragon.com/queue/list
-    await page.goto('https://hub-staging.vaultdragon.com/queue/list')
+    await page.goto(queuePage)
 
     await Promise.all([
       page.waitForNavigation(/*{ url: 'https://hub-staging.vaultdragon.com/patient/detail/608ee95795e14e00129150d3' }*/),

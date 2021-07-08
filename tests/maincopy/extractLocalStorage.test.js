@@ -1,7 +1,8 @@
 require('dotenv').config()
+const fs = require('fs')
 const { chromium } = require('playwright')
-const { init, teardown, delPatient, pausedSS, createInvoice, payInvoice } = require(process.cwd() + '/steps')
-const { browserSettings } = require(process.cwd() + '/g')
+const { login } = require(process.cwd() + '/steps/main/login')
+const { URL, browserSettings } = require(process.cwd() + '/g')
 
 let browser, context, page
 let failing = true
@@ -16,18 +17,25 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ;({ context, page } = await init(browser, path))
+  context = await browser.newContext()
+  page = await context.newPage()
+
+  // site to use
+  await page.goto(URL)
+  await login(page)
+
+  fs.writeFileSync('./creds.json', JSON.stringify(await context.storageState()))
 })
 
 afterEach(async () => {
-  await teardown(page, path, failing)
+  await page.close()
 })
 
 describe('removes data', () => {
   it('clear queue in queue list', async () => {
-    // Add test code below
+    // ===== Add test code below =====
 
-    // Add test code above
+    // ===== Add test code above =====
 
     // if test reaches here -> no issues encountered.
     failing = false

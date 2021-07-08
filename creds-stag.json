@@ -2,7 +2,7 @@
   "cookies": [],
   "origins": [
     {
-      "origin": "https://hub.vaultdragon.com",
+      "origin": "https://hub-staging.vaultdragon.com",
       "localStorage": [
         { "name": "orgCode", "value": "e2etesting" },
         {

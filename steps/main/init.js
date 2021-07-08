@@ -1,11 +1,25 @@
 const login = require('./login')
-const { URL, viewport, recordVideo } = require(process.cwd() + '/g')
+const { URL, viewport, recordVideo, buildType } = require(process.cwd() + '/g')
 const fs = require('fs')
-const storageState = require(process.cwd() + '/creds.json')
+let storageState
+let storageStateProd = require(process.cwd() + '/creds-prod.json')
+let storageStateStag = require(process.cwd() + '/creds-stag.json')
+
 let context
 let page
 
 module.exports.init = async (browser, path, skipLogin = true, recVid = false, contextObj = { viewport }) => {
+  if (buildType === 'hub') {
+    console.log(buildType)
+    console.log('hello. there')
+    storageState = require(process.cwd() + '/creds-prod.json')
+  } else if (buildType === 'hub-staging') {
+    console.log('asdasd', buildType)
+    storageState = require(process.cwd() + '/creds-stag.json')
+  }
+  console.log('hello')
+  console.log(storageState)
+
   if (skipLogin && Object.keys(storageState).length) {
     contextObj = { ...contextObj, storageState }
   }

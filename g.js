@@ -1,10 +1,15 @@
 const { defaults } = require('jest-config')
-const { testMatch } = defaults
+const { testMatch } = defaults //idk what this does i just followed soem stackoverflow
 
 // URLs
-const URL = `https://hub-staging.vaultdragon.com`
+// const buildType = 'hub-dev'
+// const buildType = 'hub'
+const buildType = 'hub-staging'
+const URL = `https://${buildType}.vaultdragon.com`
+const orgCode = 'e2etesting'
 const loginURL = `${URL}/login`
-const QueuePage = `${URL}/queue/list`
+const queuePage = `${URL}/queue/list`
+const patientPage = `${URL}/patient/list`
 
 const reportPublicPath = './report/'
 const rootDir = './'
@@ -33,8 +38,11 @@ const browserSettings = {
 
 // URLs
 module.exports.URL = URL // will ...url = url cuz issue?
+module.exports.buildType = buildType
 module.exports.loginURL = loginURL
-module.exports.QueuePage = QueuePage
+module.exports.queuePage = queuePage
+module.exports.patientPage = patientPage
+module.exports.orgCode = orgCode
 
 // Settings
 module.exports.headless = headless

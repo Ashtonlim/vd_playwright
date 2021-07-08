@@ -1,7 +1,9 @@
+const { patientPage } = require(process.cwd() + '/g')
+
 module.exports.delPatient = async (page, { id, pName, nric, num }) => {
   console.log(await page.isVisible(`text=${id} ${nric} ${pName} +65${num} Active Preview >> button`))
   if ((await page.isVisible(`text=${id} ${nric} ${pName} +65${num} Active Preview >> button`)) === false) {
-    await page.goto('https://hub-staging.vaultdragon.com/patient/list')
+    await page.goto(patientPage)
     await page.waitForTimeout(1000)
   }
 
