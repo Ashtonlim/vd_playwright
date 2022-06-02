@@ -3,8 +3,8 @@ const { testMatch } = defaults //idk what this does i just followed soem stackov
 
 // URLs
 // const buildType = 'hub-dev'
-// const buildType = 'hub'
-const buildType = 'hub-staging'
+const buildType = 'hub'
+// const buildType = 'hub-staging'
 const URL = `https://${buildType}.vaultdragon.com`
 const orgCode = 'e2etesting'
 const loginURL = `${URL}/login`

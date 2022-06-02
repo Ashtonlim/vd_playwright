@@ -15,7 +15,7 @@ afterAll(async () => {
 })
 
 beforeEach(async () => {
-  ; ({ context, page } = await init(browser, path))
+  ;({ context, page } = await init(browser, path))
 })
 
 afterEach(async () => {
